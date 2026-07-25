@@ -26,24 +26,29 @@
   </head>
 
   <body>
-    <div
-      id="banner"
-      class="relative w-full bg-white overflow-hidden"
-      style="aspect-ratio: 4 / 1; max-height: 300px"
-    >
+    <div class="relative w-full">
       <div
-        id="lang-switch"
-        class="absolute top-3 right-3 z-20 flex overflow-hidden rounded-lg border border-white/40 bg-white/20 backdrop-blur-sm text-xs font-semibold"
+        id="banner"
+        class="relative w-full bg-white overflow-hidden"
+        style="aspect-ratio: 4 / 1; max-height: 300px"
       >
-        <button type="button" data-lang="es" class="px-2 py-1">ES</button>
-        <button type="button" data-lang="en" class="px-2 py-1">EN</button>
+        <div
+          id="lang-switch"
+          class="absolute top-3 right-3 z-20 flex overflow-hidden rounded-lg border border-white/40 bg-white/20 backdrop-blur-sm text-xs font-semibold"
+        >
+          <button type="button" data-lang="es" class="px-2 py-1">ES</button>
+          <button type="button" data-lang="en" class="px-2 py-1">EN</button>
+        </div>
       </div>
 
-      <h1 class="absolute inset-0 z-10 flex items-center px-4">
+      <!-- Below the banner on small screens, where there's no room to
+      overlay it without covering the image or the language buttons;
+      overlaid on top of it from `sm:` up. -->
+      <h1 class="px-4 py-4 sm:py-0 sm:absolute sm:inset-0 sm:z-10 sm:flex sm:items-center">
         <div class="w-full max-w-7xl mx-auto">
           <span
             data-i18n="pageTitle"
-            class="bg-white/20 backdrop-blur-sm rounded-lg px-5 py-3 sm:px-8 sm:py-5 text-base sm:text-2xl md:text-4xl font-bold text-gray-900"
+            class="inline-block rounded-lg px-5 py-3 sm:bg-white/20 sm:backdrop-blur-sm sm:px-8 sm:py-5 text-base sm:text-2xl md:text-4xl font-bold text-gray-900"
           >
             Calculadora de mezclas volumétricas
           </span>
