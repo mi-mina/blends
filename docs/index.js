@@ -1,4 +1,4 @@
-// Published in https://mi-mina.github.io/Blends/
+// Published in https://mi-mina.github.io/blends/
 // https://mimina.goatcounter.com/
 
 // TODO
@@ -9,15 +9,11 @@
 // - Calcular cuántos ml hacen falta de cada esmalte de los extremos
 // - Hacer que se oculte la parte de la izquierda
 // - Poder elegir los colores de las esquinas
-// - En pantallas pequeñas no sé qué hacer con el diagrama, se sale, debería aparecer un scroll horizontal
 
 // Recipes:
 // - Comprobar que los aditivos se calculan correctamente en las recetas
 // - Reordenar las columnas de la tabla para que los aditivos estén al final y no al principio?
 // - Complementar el listado de materiales con https://ceramica.name/calculos/aformula
-
-// General:
-// - Cambiar la url para que blends se escriba con minúscula
 
 // Stuhl diagram desarrollado por Derek Philip Au en d3.js
 // https://derekphilipau.github.io/ceramic-chemistry-visualization/charts/d3.html
