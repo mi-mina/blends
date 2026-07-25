@@ -55,13 +55,17 @@
       <div class="flex flex-col md:flex-row h-full">
         <!-- Left Section: Inputs -->
         <div
-          class="w-full md:w-1/6 pr-0 md:pr-4 border-b md:border-b-0 md:border-r border-gray-300"
+          class="w-full md:w-1/6 pr-0 md:pr-4 pb-4 md:pb-0 mb-4 md:mb-0 border-b md:border-b-0 md:border-r border-gray-300"
         >
           <!-- Select field for options -->
           <label for="blendType" class="block text-md font-medium mt-4"
             ><span data-i18n="blendTypeLabel">Tipo de mezcla:</span></label
           >
-          <select id="blendType" class="border border-gray-300 p-1 mt-1 w-full">
+          <select
+            id="blendType"
+            class="border border-gray-300 pl-2 pr-8 py-1 mt-1 w-full appearance-none"
+            style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+          >
             <option value="line" data-i18n="optionLine">Lineal</option>
             <option value="triaxial" data-i18n="optionTriaxial">
               Triaxial
@@ -78,7 +82,7 @@
           <input
             id="size"
             type="number"
-            class="border border-gray-300 p-1 mt-1 w-full"
+            class="border border-gray-300 px-2 py-1 mt-1 w-full"
             data-i18n-placeholder="numberPlaceholder"
             placeholder="Enter a number"
             value="20"
@@ -92,7 +96,7 @@
             <input
               id="linePoints"
               type="number"
-              class="border border-gray-300 p-1 mt-1 w-full"
+              class="border border-gray-300 px-2 py-1 mt-1 w-full"
               data-i18n-placeholder="numberPlaceholder"
               placeholder="Enter a number"
               value="11"
@@ -107,7 +111,7 @@
             <input
               id="increments"
               type="number"
-              class="border border-gray-300 p-1 mt-1 w-full"
+              class="border border-gray-300 px-2 py-1 mt-1 w-full"
               placeholder="Enter a number"
             /> -->
           </div>
@@ -115,12 +119,12 @@
           <div id="triaxialInputs" class="hidden">
             <!-- Input field for points -->
             <label for="triaxialPoints" class="block text-md font-medium mt-4"
-              ><span data-i18n="pointsLabel">Puntos:</span></label
+              ><span data-i18n="pointsLabelTriaxial">Puntos del lateral:</span></label
             >
             <input
               id="triaxialPoints"
               type="number"
-              class="border border-gray-300 p-1 mt-1 w-full"
+              class="border border-gray-300 px-2 py-1 mt-1 w-full"
               data-i18n-placeholder="numberPlaceholder"
               placeholder="Enter a number"
               value="5"
@@ -137,7 +141,7 @@
             <input
               id="biaxialRows"
               type="number"
-              class="border border-gray-300 p-1 mt-1 w-full"
+              class="border border-gray-300 px-2 py-1 mt-1 w-full"
               data-i18n-placeholder="numberPlaceholder"
               placeholder="Enter a number"
               value="5"
@@ -152,7 +156,7 @@
             <input
               id="biaxialColumns"
               type="number"
-              class="border border-gray-300 p-1 mt-1 w-full"
+              class="border border-gray-300 px-2 py-1 mt-1 w-full"
               data-i18n-placeholder="numberPlaceholder"
               placeholder="Enter a number"
               value="5"
@@ -161,10 +165,15 @@
             />
           </div>
 
+          <p class="mt-2 text-sm text-gray-500 text-right">
+            <span data-i18n="totalPointsLabel">Nº total de puntos:</span>
+            <span id="total-points-value">0</span>
+          </p>
+
           <!-- Button to get input values -->
           <button
             id="recalculateButton"
-            class="bg-blue-500 text-white px-2 py-1 mt-4 w-full"
+            class="bg-blue-500 text-white px-2 py-1 mt-6 w-full"
             data-i18n="recalculateButton"
           >
             Recalcular
@@ -242,11 +251,11 @@
                 <span data-i18n="clearRecipesButton">Borrar recetas</span>
               </button>
             </div>
-            <div class="flex gap-4">
+            <div class="flex flex-col md:flex-row gap-4">
               <!-- Card 1 -->
               <div
                 id="recipe1"
-                class="bg-white rounded shadow border-2 p-2 flex flex-col w-1/4"
+                class="bg-white rounded shadow border-2 p-2 flex flex-col w-full md:w-1/4"
               >
                 <h3
                   class="text-lg font-semibold mb-2 text-center rounded-t -mx-2 -mt-2 px-2 py-1.5"
@@ -362,7 +371,7 @@
               <!-- Card 2 -->
               <div
                 id="recipe2"
-                class="bg-white rounded shadow border-2 p-2 flex flex-col w-1/4"
+                class="bg-white rounded shadow border-2 p-2 flex flex-col w-full md:w-1/4"
               >
                 <h3
                   class="text-lg font-semibold mb-2 text-center rounded-t -mx-2 -mt-2 px-2 py-1.5"
@@ -477,7 +486,7 @@
               <!-- Card 3 -->
               <div
                 id="recipe3"
-                class="hidden bg-white rounded shadow border-2 p-2 flex flex-col w-1/4"
+                class="hidden bg-white rounded shadow border-2 p-2 flex flex-col w-full md:w-1/4"
               >
                 <h3
                   class="text-lg font-semibold mb-2 text-center rounded-t -mx-2 -mt-2 px-2 py-1.5"
@@ -592,7 +601,7 @@
               <!-- Card 4 -->
               <div
                 id="recipe4"
-                class="hidden bg-white rounded shadow border-2 p-2 flex flex-col w-1/4"
+                class="hidden bg-white rounded shadow border-2 p-2 flex flex-col w-full md:w-1/4"
               >
                 <h3
                   class="text-lg font-semibold mb-2 text-center rounded-t -mx-2 -mt-2 px-2 py-1.5"

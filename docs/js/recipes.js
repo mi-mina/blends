@@ -56,6 +56,7 @@ const RECIPE_CARDS = [
 ];
 
 const RECIPE_ROW_SELECTOR = ".mb-2.flex.items-center";
+const ORIGINAL_ROWS_PER_CARD = 4;
 
 /**
  * Wires up a single recipe row: saving state/re-rendering on change,
@@ -240,12 +241,17 @@ export function clearAllRecipes() {
 }
 
 /**
- * Resets a single recipe card's selects/inputs/checkboxes and syncs
+ * Resets a single recipe card's selects/inputs/checkboxes, removes any
+ * rows added beyond the original 4 (see addRecipeRow), and syncs
  * state.recipes[key] to match (but doesn't touch localStorage or
  * re-render the table - callers do that once after clearing).
  */
 function clearRecipeCard(recipeId, key) {
   const container = document.getElementById(recipeId);
+
+  container.querySelectorAll(RECIPE_ROW_SELECTOR).forEach((row, i) => {
+    if (i >= ORIGINAL_ROWS_PER_CARD) row.remove();
+  });
 
   container.querySelectorAll(".recipe-material-select").forEach(select => {
     select.value = "";
@@ -409,7 +415,7 @@ export function renderRecipesTable() {
   }
 
   let html = `
-    <h3 class="text-lg font-semibold mb-2">${t("recipesTableTitle")}</h3>
+    <h3 class="text-lg font-semibold mb-2">${t("recipesTableTitle", { count: numRows })}</h3>
     <table class="border-collapse text-sm">
     <thead>
       <tr>

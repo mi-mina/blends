@@ -231,6 +231,9 @@ function drawBlend() {
     drawBiaxialBlend(state.blendData);
   }
 
+  document.getElementById("total-points-value").textContent =
+    state.blendData.length;
+
   renderRecipesTable();
 }
 
