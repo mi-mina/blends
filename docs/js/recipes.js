@@ -65,6 +65,36 @@ RECIPE_CARDS.forEach(({ recipeId, key }) => {
         renderRecipesTable();
       });
     });
+
+  // A percentage only makes sense once its row has a material selected,
+  // so keep each percentage input disabled (and empty) until then.
+  const selects = container.querySelectorAll(".recipe-material-select");
+  const inputs = container.querySelectorAll('input[type="text"]');
+  selects.forEach((select, i) => {
+    const input = inputs[i];
+    if (!input) return;
+
+    const syncPercentageInput = () => {
+      input.disabled = !select.value;
+      if (!select.value) input.value = "";
+    };
+
+    syncPercentageInput();
+    select.addEventListener("change", syncPercentageInput);
+  });
+
+  // Let the up/down arrow keys nudge a percentage input by 1, clamped to 0-100
+  container.querySelectorAll('input[type="text"]').forEach(input => {
+    input.addEventListener("keydown", event => {
+      if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
+      event.preventDefault();
+
+      const step = event.key === "ArrowUp" ? 1 : -1;
+      const current = parseFloat(input.value) || 0;
+      input.value = Math.min(100, Math.max(0, current + step));
+      input.dispatchEvent(new Event("change"));
+    });
+  });
 });
 
 function saveRecipesToLocalStorage() {
@@ -125,6 +155,7 @@ export function clearAllRecipes() {
     });
     container.querySelectorAll('input[type="text"]').forEach(input => {
       input.value = "";
+      input.disabled = true;
     });
 
     state.recipes[key] = getRecipeData(recipeId);

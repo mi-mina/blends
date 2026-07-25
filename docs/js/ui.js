@@ -1,6 +1,29 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Functions to update UI elements ////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+import { colorA, colorB, colorC, colorD } from "./constants.js";
+import { getContrastTextColor } from "./utils.js";
+
+/**
+ * Colors each recipe card's border and title banner with the same color
+ * as its corresponding corner in the diagram, using a readable text color.
+ */
+export function applyRecipeCardColors() {
+  const cards = [
+    { card: document.getElementById("recipe1"), color: colorA },
+    { card: document.getElementById("recipe2"), color: colorB },
+    { card: document.getElementById("recipe3"), color: colorC },
+    { card: document.getElementById("recipe4"), color: colorD },
+  ];
+
+  cards.forEach(({ card, color }) => {
+    const header = card.querySelector("h3");
+    card.style.borderColor = color;
+    header.style.backgroundColor = color;
+    header.style.color = getContrastTextColor(color);
+  });
+}
+
 /**
  * Updates the visibility of blend inputs based on the selected blend type.
  * @param {string} blendType - The selected blend type ("line", "triaxial", or "biaxial").

@@ -29,6 +29,30 @@ export function blendColors(colors, percentages) {
 }
 
 /**
+ * Picks whichever of black or white gives better contrast against a
+ * background color, per the WCAG relative luminance formula.
+ * @param {string} hexColor - Background color as a hex string (#rgb, #rrggbb or #rrggbbaa).
+ * @returns {string} "#000000" or "#ffffff".
+ */
+export function getContrastTextColor(hexColor) {
+  const r = parseInt(hexColor.slice(1, 3), 16) / 255;
+  const g = parseInt(hexColor.slice(3, 5), 16) / 255;
+  const b = parseInt(hexColor.slice(5, 7), 16) / 255;
+
+  const toLinear = channel =>
+    channel <= 0.03928
+      ? channel / 12.92
+      : Math.pow((channel + 0.055) / 1.055, 2.4);
+  const luminance =
+    0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+
+  const contrastWithWhite = 1.05 / (luminance + 0.05);
+  const contrastWithBlack = (luminance + 0.05) / 0.05;
+
+  return contrastWithWhite >= contrastWithBlack ? "#ffffff" : "#000000";
+}
+
+/**
  * Formats a number for display: hides zeros, and only shows a decimal
  * when the value isn't a whole number once rounded.
  * @param {number} value

@@ -44,7 +44,12 @@ import {
   loadRecipesFromLocalStorage,
   clearAllRecipes,
 } from "./js/recipes.js";
-import { updateBlendInputs, updateRecipeCards, showTab } from "./js/ui.js";
+import {
+  updateBlendInputs,
+  updateRecipeCards,
+  showTab,
+  applyRecipeCardColors,
+} from "./js/ui.js";
 import { downloadDiagramAsPng, downloadRecipesAsCsv } from "./js/download.js";
 import { applyStaticTranslations, getLang, setLang, t } from "./js/i18n.js";
 import { resortMaterials } from "./js/materials.js";
@@ -60,6 +65,7 @@ loadMaterials()
 function init() {
   applyStaticTranslations();
   initLangSwitch();
+  applyRecipeCardColors();
 
   // Force "line" blend type to be selected on page load
   document.getElementById("blendType").value = "line";
