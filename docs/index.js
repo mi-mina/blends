@@ -9,12 +9,12 @@
 // - Calcular cuántos ml hacen falta de cada esmalte de los extremos
 // - Hacer que se oculte la parte de la izquierda
 // - Poder elegir los colores de las esquinas
+// - En pantallas pequeñas no sé qué hacer con el diagrama, se sale, debería aparecer un scroll horizontal
 
 // Recipes:
 // - Comprobar que los aditivos se calculan correctamente en las recetas
 // - Reordenar las columnas de la tabla para que los aditivos estén al final y no al principio?
 // - Complementar el listado de materiales con https://ceramica.name/calculos/aformula
-// - Las recetas no se ven bien en pantallas pequeñas, hacer que se vea bien en móviles y tablets
 
 // General:
 // - Cambiar la url para que blends se escriba con minúscula
@@ -187,7 +187,8 @@ function loadBlendSettings() {
   }
 
   BLEND_SETTINGS_FIELDS.forEach(id => {
-    if (settings[id] !== undefined) document.getElementById(id).value = settings[id];
+    if (settings[id] !== undefined)
+      document.getElementById(id).value = settings[id];
   });
 }
 
