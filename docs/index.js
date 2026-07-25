@@ -11,14 +11,10 @@
 // - Poder elegir los colores de las esquinas
 
 // Recipes:
-// - Añadir automáticamente una fila nueva en las recetas cuando se rellena la última disponible
 // - Comprobar que los aditivos se calculan correctamente en las recetas
+// - Reordenar las columnas de la tabla para que los aditivos estén al final y no al principio?
 // - Complementar el listado de materiales con https://ceramica.name/calculos/aformula
-// - Los anchos de las columnas de la tabla de recetas se reparten de forma desigual, hacer que se repartan de forma más uniforme
-// - No hacer que la tabla ocupe todo el ancho de la pantalla, sino solo el espacio necesario y pegada a la izquierda.
-// - Resaltar mejor el cuadro de las recetas
 // - Las recetas no se ven bien en pantallas pequeñas, hacer que se vea bien en móviles y tablets
-// - Añadir la suma de los porcentajes en cada receta, y que se pueda ver si es 100% o no
 
 // General:
 // - Cambiar la url para que blends se escriba con minúscula
@@ -43,6 +39,7 @@ import {
   renderRecipesTable,
   loadRecipesFromLocalStorage,
   clearAllRecipes,
+  clearRecipesBeyondBlendType,
 } from "./js/recipes.js";
 import {
   updateBlendInputs,
@@ -67,9 +64,12 @@ function init() {
   initLangSwitch();
   applyRecipeCardColors();
 
-  // Force "line" blend type to be selected on page load
-  document.getElementById("blendType").value = "line";
-  document.getElementById("blendType").dispatchEvent(new Event("change"));
+  // Restore the previous session's blend type/size/points, if any (falls
+  // back to the static HTML defaults, forcing "line", if nothing was saved)
+  loadBlendSettings();
+  const initialBlendType = document.getElementById("blendType").value;
+  updateBlendInputs(initialBlendType);
+  updateRecipeCards(initialBlendType);
 
   // Event listeners for blend type and tab changes
   document.getElementById("blendType").addEventListener("change", event => {
@@ -81,7 +81,13 @@ function init() {
     // Update recipe cards visibility
     updateRecipeCards(blendType);
 
+    // Recompute state.blendData for the new blend type before clearing
+    // recipes/re-rendering the table below, which both read from it
     drawBlend();
+
+    // Clear any recipe cards this blend type doesn't use, so they don't
+    // leak into the recipes table's columns/calculations
+    clearRecipesBeyondBlendType(blendType);
 
     renderRecipesTable();
   });
@@ -136,6 +142,53 @@ function init() {
 
   // Restore saved recipe selections now that state.blendData exists
   loadRecipesFromLocalStorage();
+
+  // Saved recipes may include leftovers from a blend type with more
+  // corners than the one just restored, so sweep away anything beyond
+  // what's currently visible.
+  clearRecipesBeyondBlendType(document.getElementById("blendType").value);
+}
+
+const BLEND_SETTINGS_KEY = "blends-settings";
+const BLEND_SETTINGS_FIELDS = [
+  "blendType",
+  "size",
+  "linePoints",
+  "triaxialPoints",
+  "biaxialRows",
+  "biaxialColumns",
+];
+
+/**
+ * Saves the current blend type, sample size, and points/rows/columns for
+ * every blend type, so they survive a page reload.
+ */
+function saveBlendSettings() {
+  const settings = {};
+  BLEND_SETTINGS_FIELDS.forEach(id => {
+    settings[id] = document.getElementById(id).value;
+  });
+  localStorage.setItem(BLEND_SETTINGS_KEY, JSON.stringify(settings));
+}
+
+/**
+ * Restores a previously saved blend type/size/points into their inputs.
+ * Leaves the static HTML defaults in place if nothing was saved.
+ */
+function loadBlendSettings() {
+  const saved = localStorage.getItem(BLEND_SETTINGS_KEY);
+  if (!saved) return;
+
+  let settings;
+  try {
+    settings = JSON.parse(saved);
+  } catch {
+    return;
+  }
+
+  BLEND_SETTINGS_FIELDS.forEach(id => {
+    if (settings[id] !== undefined) document.getElementById(id).value = settings[id];
+  });
 }
 
 /**
@@ -143,6 +196,8 @@ function init() {
  * @description This function retrieves input values, generates blend data, and calls the appropriate draw function.
  */
 function drawBlend() {
+  saveBlendSettings();
+
   const testSize = document.getElementById("size").value;
   const blendType = document.getElementById("blendType").value;
   const linePointsInput = document.getElementById("linePoints");

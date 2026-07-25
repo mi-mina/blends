@@ -220,10 +220,26 @@
             <div class="flex justify-end mb-2">
               <button
                 id="clear-recipes-button"
-                class="px-3 py-1.5 text-sm text-red-600 hover:text-red-800 hover:underline focus:outline-none"
-                data-i18n="clearRecipesButton"
+                class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-red-600 hover:text-red-800 hover:underline focus:outline-none"
               >
-                Borrar recetas
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                >
+                  <path d="M4 7h16" />
+                  <path d="M6 7v13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7" />
+                  <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+                  <path d="M10 11v6" />
+                  <path d="M14 11v6" />
+                </svg>
+                <span data-i18n="clearRecipesButton">Borrar recetas</span>
               </button>
             </div>
             <div class="flex gap-4">
@@ -336,6 +352,11 @@
                     class="mx-2 w-5 h-5 accent-blue-600 rounded border-gray-300"
                   />
                 </div>
+
+                <div class="recipe-total mt-2 text-right text-gray-500">
+                  <span data-i18n="recipeTotalLabel">Total:</span>
+                  <span class="recipe-total-value">0%</span>
+                </div>
               </div>
 
               <!-- Card 2 -->
@@ -447,6 +468,11 @@
                     class="mx-2 w-5 h-5 accent-blue-600 rounded border-gray-300"
                   />
                 </div>
+
+                <div class="recipe-total mt-2 text-right text-gray-500">
+                  <span data-i18n="recipeTotalLabel">Total:</span>
+                  <span class="recipe-total-value">0%</span>
+                </div>
               </div>
               <!-- Card 3 -->
               <div
@@ -556,6 +582,11 @@
                     type="checkbox"
                     class="mx-2 w-5 h-5 accent-blue-600 rounded border-gray-300"
                   />
+                </div>
+
+                <div class="recipe-total mt-2 text-right text-gray-500">
+                  <span data-i18n="recipeTotalLabel">Total:</span>
+                  <span class="recipe-total-value">0%</span>
                 </div>
               </div>
               <!-- Card 4 -->
@@ -667,9 +698,14 @@
                     class="mx-2 w-5 h-5 accent-blue-600 rounded border-gray-300"
                   />
                 </div>
+
+                <div class="recipe-total mt-2 text-right text-gray-500">
+                  <span data-i18n="recipeTotalLabel">Total:</span>
+                  <span class="recipe-total-value">0%</span>
+                </div>
               </div>
             </div>
-            <div id="recipes-table-container" class="mt-8 w-full"></div>
+            <div id="recipes-table-container" class="mt-16 w-full"></div>
           </div>
         </div>
       </div>

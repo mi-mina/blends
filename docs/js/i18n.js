@@ -24,6 +24,8 @@ export const translations = {
     recipeMaterial: "Material",
     recipePercent: "%",
     recipeAdditive: "Adit.",
+    recipeTotalLabel: "Total:",
+    recipesTableTitle: "Tabla de recetas",
     selectMaterialOption: "Selecciona un material",
     aboutTitle: "Sobre esta página",
     aboutIntro:
@@ -82,6 +84,8 @@ export const translations = {
     recipeMaterial: "Material",
     recipePercent: "%",
     recipeAdditive: "Add.",
+    recipeTotalLabel: "Total:",
+    recipesTableTitle: "Recipe table",
     selectMaterialOption: "Select a material",
     aboutTitle: "About this page",
     aboutIntro:
