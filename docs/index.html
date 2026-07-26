@@ -186,7 +186,7 @@
         </div>
 
         <!-- Right Section: Tabs -->
-        <div class="w-full md:w-5/6 p-2">
+        <div class="w-full md:w-5/6 p-2 md:pl-6">
           <!-- Tabs -->
           <div class="border-b border-gray-200 mb-4 flex">
             <button
@@ -249,23 +249,22 @@
                   class="w-4 h-4"
                   aria-hidden="true"
                 >
-                  <path d="M4 7h16" />
-                  <path d="M6 7v13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7" />
-                  <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
-                  <path d="M10 11v6" />
-                  <path d="M14 11v6" />
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                  <path d="M21 3v5h-5" />
+                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                  <path d="M8 16H3v5" />
                 </svg>
-                <span data-i18n="clearRecipesButton">Borrar recetas</span>
+                <span data-i18n="clearRecipesButton">Limpiar recetas</span>
               </button>
             </div>
             <div class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(240px,360px))]">
               <!-- Card 1 -->
               <div
                 id="recipe1"
-                class="bg-white rounded shadow border-2 p-2 flex flex-col"
+                class="bg-white rounded shadow border-2 p-2 flex flex-col overflow-hidden"
               >
                 <h3
-                  class="text-lg font-semibold mb-2 text-center rounded-t -mx-2 -mt-2 px-2 py-1.5"
+                  class="text-lg font-semibold mb-2 text-center -mx-2 -mt-2 px-2 py-1.5"
                   data-i18n="recipeTitleA"
                 >
                   Receta A
@@ -290,11 +289,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -310,11 +330,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -330,11 +371,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -350,11 +412,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -378,10 +461,10 @@
               <!-- Card 2 -->
               <div
                 id="recipe2"
-                class="bg-white rounded shadow border-2 p-2 flex flex-col"
+                class="bg-white rounded shadow border-2 p-2 flex flex-col overflow-hidden"
               >
                 <h3
-                  class="text-lg font-semibold mb-2 text-center rounded-t -mx-2 -mt-2 px-2 py-1.5"
+                  class="text-lg font-semibold mb-2 text-center -mx-2 -mt-2 px-2 py-1.5"
                   data-i18n="recipeTitleB"
                 >
                   Receta B
@@ -406,11 +489,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -426,11 +530,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -446,11 +571,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -466,11 +612,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -493,10 +660,10 @@
               <!-- Card 3 -->
               <div
                 id="recipe3"
-                class="hidden bg-white rounded shadow border-2 p-2 flex flex-col"
+                class="hidden bg-white rounded shadow border-2 p-2 flex flex-col overflow-hidden"
               >
                 <h3
-                  class="text-lg font-semibold mb-2 text-center rounded-t -mx-2 -mt-2 px-2 py-1.5"
+                  class="text-lg font-semibold mb-2 text-center -mx-2 -mt-2 px-2 py-1.5"
                   data-i18n="recipeTitleC"
                 >
                   Receta C
@@ -521,11 +688,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -541,11 +729,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -561,11 +770,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -581,11 +811,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -608,10 +859,10 @@
               <!-- Card 4 -->
               <div
                 id="recipe4"
-                class="hidden bg-white rounded shadow border-2 p-2 flex flex-col"
+                class="hidden bg-white rounded shadow border-2 p-2 flex flex-col overflow-hidden"
               >
                 <h3
-                  class="text-lg font-semibold mb-2 text-center rounded-t -mx-2 -mt-2 px-2 py-1.5"
+                  class="text-lg font-semibold mb-2 text-center -mx-2 -mt-2 px-2 py-1.5"
                   data-i18n="recipeTitleD"
                 >
                   Receta D
@@ -636,11 +887,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -656,11 +928,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -676,11 +969,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -696,11 +1010,32 @@
                 </div>
 
                 <div class="mb-2 flex items-center">
-                  <div class="flex flex-col flex-1 mr-2">
+                  <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-8 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
+                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
                       style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
                     ></select>
+                    <button
+                      type="button"
+                      class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
+                      aria-label="Quitar material"
+                      data-i18n-aria-label="removeMaterialLabel"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
@@ -723,7 +1058,7 @@
             </div>
             <div
               id="recipes-table-container"
-              class="mt-16 w-full overflow-x-auto"
+              class="mt-24 w-full overflow-x-auto"
             ></div>
           </div>
         </div>

@@ -85,6 +85,38 @@ function wireRecipeRow(container, key, select, input, checkbox) {
   syncPercentageInput();
   select.addEventListener("change", syncPercentageInput);
 
+  // Show a small "x" button to clear this row's material, instead of
+  // requiring the user to reopen the select and pick the blank option.
+  const clearButton = select.parentElement.querySelector(
+    ".recipe-clear-material-button",
+  );
+  const syncClearButton = () => {
+    clearButton.classList.toggle("hidden", !select.value);
+  };
+  syncClearButton();
+  select.addEventListener("change", syncClearButton);
+  clearButton.addEventListener("click", () => {
+    const row = select.closest(RECIPE_ROW_SELECTOR);
+    const rows = container.querySelectorAll(RECIPE_ROW_SELECTOR);
+
+    select.value = "";
+    input.value = "";
+    checkbox.checked = false;
+
+    if (rows.length <= ORIGINAL_ROWS_PER_CARD) {
+      // Keep at least the original 4 rows: instead of leaving this now-empty
+      // row as a gap in the middle, move it after the current last row.
+      const lastRow = rows[rows.length - 1];
+      if (lastRow !== row) lastRow.insertAdjacentElement("afterend", row);
+    } else {
+      // Already more rows than the baseline (extras auto-added as earlier
+      // ones filled up), so there's no need to keep this one around.
+      row.remove();
+    }
+
+    select.dispatchEvent(new Event("change"));
+  });
+
   // Let the up/down arrow keys nudge the percentage by 1, clamped to 0-100
   input.addEventListener("keydown", event => {
     if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
@@ -173,7 +205,8 @@ RECIPE_CARDS.forEach(({ recipeId, key }) => {
   const checkboxes = container.querySelectorAll('input[type="checkbox"]');
 
   selects.forEach((select, i) => {
-    if (inputs[i]) wireRecipeRow(container, key, select, inputs[i], checkboxes[i]);
+    if (inputs[i])
+      wireRecipeRow(container, key, select, inputs[i], checkboxes[i]);
   });
 });
 
@@ -264,6 +297,9 @@ function clearRecipeCard(recipeId, key) {
   container.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
     checkbox.checked = false;
   });
+  container
+    .querySelectorAll(".recipe-clear-material-button")
+    .forEach(clearButton => clearButton.classList.add("hidden"));
 
   state.recipes[key] = getRecipeData(recipeId);
   updateRecipeTotal(container);
@@ -341,15 +377,20 @@ export function getMaterialPercentageAtPoint(point, materialId) {
   let materialPercentage = 0;
 
   Object.entries(state.recipes).forEach(([key, recipe]) => {
+    // A key can exist in state.recipes without being one of the current
+    // blend type's corners (e.g. "3"/"4" while on "line"), in which case
+    // it has no percentage here - skip it rather than let `undefined * x`
+    // poison the sum with NaN.
     const recipePercentage = percentages[key];
+    if (recipePercentage === undefined) return;
 
-    const a = recipe.filter(mat => mat.materialId === materialId);
-    // TODO handle case where materialId is not found
-    // TODO ver qué pasa cuando aparece el mismo material dos veces en la misma receta
-    // TODO ver qué pasa si los porcentajes de la receta no suman 100
+    // Sum every row using this material in the recipe, in case it was
+    // added more than once (e.g. once as a base ingredient, once as an additive).
+    const rowsPercentage = recipe
+      .filter(mat => mat.materialId === materialId)
+      .reduce((sum, mat) => sum + (parseFloat(mat.percentage) || 0), 0);
 
-    materialPercentage +=
-      a.length > 0 ? (recipePercentage * a[0].percentage) / 100 : 0;
+    materialPercentage += (recipePercentage * rowsPercentage) / 100;
   });
 
   return materialPercentage;
@@ -383,7 +424,7 @@ function getCornerLetter(point) {
   if (!percentages) return null;
 
   const pureKey = Object.entries(percentages).find(
-    ([, value]) => Math.round(value) === 100
+    ([, value]) => Math.round(value) === 100,
   )?.[0];
   return pureKey ? CORNER_LETTERS[pureKey] : null;
 }
@@ -442,15 +483,15 @@ export function renderRecipesTable() {
     const rowBorderStyle = `border-bottom-color:${pointColor}`;
     html += `
       <tr>
-        <td class="border-b-2 px-2 py-1 text-center" style="background-color:${pointColor};color:${pointTextColor};${rowBorderStyle}">${numberLabel}</td>
+        <td class="border-b-2 px-2 py-1 text-center${cornerLetter ? " font-bold" : ""}" style="background-color:${pointColor};color:${pointTextColor};${rowBorderStyle}">${numberLabel}</td>
         ${selectedMaterials
           .map(materialId => {
             const materialPercentage = getMaterialPercentageAtPoint(
               recipeNumber,
-              materialId
+              materialId,
             );
             return `<td class="border-b-2 px-2 py-1" style="${rowBorderStyle}">${roundTo(
-              materialPercentage
+              materialPercentage,
             )}%</td>`;
           })
           .join("")}

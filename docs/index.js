@@ -4,6 +4,9 @@
 // TODO
 // - Que se pueda descargar tanto el diagrama como las recetas en un formato que luego se pueda cargar de nuevo (por ejemplo, un JSON con los datos de la mezcla y las recetas, o un CSV con las recetas).
 // - Banner, la proporción de los espirógrafos no se mantiene al cambiar el tamaño de la ventana, hacer que se mantenga la proporción.
+// - Ver que todos los elementos tengan el mismo radio de curvatura en las esquinas, y que sea consistente con el resto de la web.
+// - Ver cómo reorganizar las acciones, sobre todo descargar y limpiar
+// - Ver que todos los labels de los inputs tengan el mismo estilo, y que sea consistente con el resto de la web.
 
 // Improve:
 // - Calcular cuántos ml hacen falta de cada esmalte de los extremos
@@ -14,6 +17,8 @@
 // - Comprobar que los aditivos se calculan correctamente en las recetas
 // - Reordenar las columnas de la tabla para que los aditivos estén al final y no al principio?
 // - Complementar el listado de materiales con https://ceramica.name/calculos/aformula
+// - Posibilidad de darle un nombre custom a cada receta
+// - ¿Qué pasa si los porcentajes de la receta no suman 100?
 
 // Stuhl diagram desarrollado por Derek Philip Au en d3.js
 // https://derekphilipau.github.io/ceramic-chemistry-visualization/charts/d3.html

@@ -18,7 +18,7 @@ export const translations = {
     tabDiagram: "Diagrama",
     tabRecipes: "Recetas",
     downloadButton: "Descargar",
-    clearRecipesButton: "Borrar recetas",
+    clearRecipesButton: "Limpiar recetas",
     recipeTitleA: "Receta A",
     recipeTitleB: "Receta B",
     recipeTitleC: "Receta C",
@@ -29,6 +29,7 @@ export const translations = {
     recipeTotalLabel: "Total:",
     recipesTableTitle: "Tabla de {count} recetas",
     selectMaterialOption: "Selecciona un material",
+    removeMaterialLabel: "Quitar material",
     aboutTitle: "Sobre esta página",
     aboutIntro:
       "Esta herramienta genera diagramas de mezclas —lineales, triaxiales y biaxiales— para ayudarte a diseñar pruebas de esmaltes cerámicos usando el método volumétrico. Empecé haciéndola para mis propios experimentos y la comparto aquí por si a alguien más le resulta útil.",
@@ -51,7 +52,7 @@ export const translations = {
     labelColumns: "columnas",
     invalidPointsAlert: "Introduce un número entero válido para Puntos.",
     confirmClearRecipes:
-      "¿Borrar todas las recetas? Esta acción no se puede deshacer.",
+      "¿Limpiar todas las recetas? Esta acción no se puede deshacer.",
     csvBaseRecipes: "Recetas base",
     csvRecipe: "Receta",
     csvMaterial: "Material",
@@ -91,6 +92,7 @@ export const translations = {
     recipeTotalLabel: "Total:",
     recipesTableTitle: "Table of {count} recipes",
     selectMaterialOption: "Select a material",
+    removeMaterialLabel: "Remove material",
     aboutTitle: "About this page",
     aboutIntro:
       "This tool generates blend diagrams —linear, triaxial and biaxial— to help you design ceramic glaze tests using the volumetric method. I started building it for my own experiments and I'm sharing it here in case it's useful to someone else.",
@@ -112,7 +114,7 @@ export const translations = {
     labelRows: "rows",
     labelColumns: "columns",
     invalidPointsAlert: "Please enter a valid integer for Points.",
-    confirmClearRecipes: "Delete all recipes? This action cannot be undone.",
+    confirmClearRecipes: "Clear all recipes? This action cannot be undone.",
     csvBaseRecipes: "Base recipes",
     csvRecipe: "Recipe",
     csvMaterial: "Material",
@@ -166,9 +168,10 @@ export function materialName(material) {
 
 /**
  * Applies the active language to every element tagged with
- * `data-i18n`/`data-i18n-placeholder`, plus <title> and <html lang>.
- * Doesn't touch anything generated dynamically (diagram, recipe
- * selects/table) — callers re-render those separately after switching.
+ * `data-i18n`/`data-i18n-placeholder`/`data-i18n-aria-label`, plus
+ * <title> and <html lang>. Doesn't touch anything generated
+ * dynamically (diagram, recipe selects/table) — callers re-render
+ * those separately after switching.
  */
 export function applyStaticTranslations() {
   const lang = getLang();
@@ -180,5 +183,8 @@ export function applyStaticTranslations() {
   });
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
     el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
+  });
+  document.querySelectorAll("[data-i18n-aria-label]").forEach(el => {
+    el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria-label")));
   });
 }
