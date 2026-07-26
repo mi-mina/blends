@@ -175,6 +175,19 @@ export function materialName(material) {
 }
 
 /**
+ * Text to match a material against when searching: its display name
+ * plus whatever alternative names it's known by (e.g. "Creta" also
+ * matches "Carbonato de Calcio") - see `searchName`/`searchName_es` in
+ * docs/data/materials.json.
+ * @param {Object} material
+ * @returns {string}
+ */
+export function materialSearchText(material) {
+  const aliases = getLang() === "en" ? material.searchName : material.searchName_es;
+  return aliases ? `${materialName(material)} ${aliases}` : materialName(material);
+}
+
+/**
  * Applies the active language to every element tagged with
  * `data-i18n`/`data-i18n-placeholder`/`data-i18n-aria-label`, plus
  * <title> and <html lang>. Doesn't touch anything generated

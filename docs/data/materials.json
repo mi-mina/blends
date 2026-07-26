@@ -41,8 +41,8 @@
    },
    {
       "materialId":4,
-      "materialName_es":"Carbonato de Bario",
-      "searchName_es":"Carbonato de Bario",
+      "materialName_es":"Carbonato de bario",
+      "searchName_es":"Carbonato de bario",
       "materialName":"Barium Carbonate",
       "searchName":"Barium Carbonate",
       "materialAnalysis":"BaO: 78",
@@ -69,8 +69,8 @@
    },
    {
       "materialId":6,
-      "materialName_es":"Óxido de Cobre",
-      "searchName_es":"Óxido de Cobre",
+      "materialName_es":"Óxido de cobre",
+      "searchName_es":"Óxido de cobre",
       "materialName":"Black Copper Oxide",
       "searchName":"Black Copper Oxide",
       "materialAnalysis":"CuO: 100",
@@ -92,8 +92,8 @@
    },
    {
       "materialId":8,
-      "materialName_es":"Óxido de Níquel",
-      "searchName_es":"Óxido de Níquel",
+      "materialName_es":"Óxido de níquel",
+      "searchName_es":"Óxido de níquel",
       "materialName":"Nickel Oxide",
       "searchName":"Nickel Oxide",
       "materialAnalysis":"NiO: 100",
@@ -139,8 +139,8 @@
    },
    {
       "materialId":12,
-      "materialName_es":"Talco calcinado, Silicato de Magnesio",
-      "searchName_es":"Talco calcinado, Silicato de Magnesio",
+      "materialName_es":"Talco calcinado, Silicato de magnesio",
+      "searchName_es":"Talco calcinado, Silicato de magnesio",
       "materialName":"Calcined Talc, Magnesium Silicate",
       "searchName":"Calcined Talc, Magnesium Silicate",
       "materialAnalysis":"SiO2: 63, MgO: 32",
@@ -196,8 +196,8 @@
    },
    {
       "materialId":17,
-      "materialName_es":"Carbonato de Cobre",
-      "searchName_es":"Carbonato de Cobre",
+      "materialName_es":"Carbonato de cobre",
+      "searchName_es":"Carbonato de cobre",
       "materialName":"Copper Carbonate",
       "searchName":"Copper Carbonate",
       "materialAnalysis":"CuO: 64",
@@ -530,7 +530,7 @@
    {
       "materialId":41,
       "materialName_es":"Rutilo",
-      "searchName_es":"Rutile",
+      "searchName_es":"Rutilo",
       "materialName":"Rutile",
       "searchName":"Rutile",
       "materialAnalysis":"TiO2: 90, Fe2O3: 10",
@@ -623,7 +623,7 @@
    {
       "materialId":49,
       "materialName_es":"Talco",
-      "searchName_es":"Talco, Silicato de Magnesio",
+      "searchName_es":"Talco, Silicato de magnesio",
       "materialName":"Talc",
       "searchName":"Talc, Magnesium Silicate",
       "materialAnalysis":"SiO2: 63, MgO: 32",
@@ -670,8 +670,8 @@
       "materialId":53,
       "materialName_es":"Ulexita",
       "searchName_es":"Ulexita",
-      "materialName":"Ulexita",
-      "searchName":"Ulexita",
+      "materialName":"Ulexite",
+      "searchName":"Ulexite",
       "materialAnalysis":"B2O3: 43, Na2O: 8, CaO: 14",
       "materialOxides":[
          "B2O3",
@@ -700,7 +700,7 @@
    {
       "materialId":55,
       "materialName_es":"Creta",
-      "searchName_es":"Creta, Carbonato de Calcio",
+      "searchName_es":"Creta, Carbonato de calcio",
       "materialName":"Whiting",
       "searchName":"Whiting, Calcium Carbonate",
       "materialAnalysis":"CaO: 56",
@@ -796,6 +796,78 @@
       "materialOxides":[
          "SiO2",
          "ZrO2"
+      ]
+   },
+   {
+      "materialId":63,
+      "materialName_es":"Monosilicato de plomo",
+      "searchName_es":"Monosilicato de plomo",
+      "materialName":"Lead Monosilicate",
+      "searchName":"Lead Monosilicate",
+      "materialAnalysis":"PbO: 79, SiO2: 21",
+      "materialOxides":[
+         "PbO",
+         "SiO2"
+      ]
+   },
+   {
+      "materialId":64,
+      "materialName_es":"Bisilicato de plomo",
+      "searchName_es":"Bisilicato de plomo",
+      "materialName":"Lead Bisilicate",
+      "searchName":"Lead Bisilicate",
+      "materialAnalysis":"PbO: 65, SiO2: 33, Al2O3: 2",
+      "materialOxides":[
+         "PbO",
+         "SiO2",
+         "Al2O3"
+      ]
+   },
+   {
+      "materialId":65,
+      "materialName_es":"Lepidolita",
+      "searchName_es":"Lepidolita",
+      "materialName":"Lepidolite",
+      "searchName":"Lepidolite",
+      "materialAnalysis":"SiO2: 51, Al2O3: 28, Li2O: 5, K2O: 10, Na2O: 0, F: 6",
+      "materialOxides":[
+         "SiO2",
+         "Al2O3",
+         "Li2O",
+         "K2O",
+         "Na2O",
+         "F"
+      ]
+   },
+   {
+      "materialId":66,
+      "materialName_es":"Pegmatita",
+      "searchName_es":"Pegmatita",
+      "materialName":"Pegmatite",
+      "searchName":"Pegmatite",
+      "materialAnalysis":"SiO2: 75, Al2O3: 15, K2O: 5, Na2O: 4, CaO: 1",
+      "materialOxides":[
+         "SiO2",
+         "Al2O3",
+         "K2O",
+         "Na2O",
+         "CaO"
+      ]
+   },
+   {
+      "materialId":67,
+      "materialName_es":"CQ-3",
+      "searchName_es":"CQ-3, CQ-003, Frita alcalino-bórica, Prodesco",
+      "materialName":"CQ-3",
+      "searchName":"CQ-3, CQ-003, Alkaline borate frit, Prodesco",
+      "materialAnalysis":"SiO2: 30, Al2O3: 8, B2O3: 30, Na2O: 15, K2O: 8, CaO: 1",
+      "materialOxides":[
+         "SiO2",
+         "Al2O3",
+         "B2O3",
+         "Na2O",
+         "K2O",
+         "CaO"
       ]
    }
 ]

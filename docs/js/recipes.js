@@ -1,6 +1,6 @@
 import { state } from "./state.js";
 import { roundTo, blendColors, getContrastTextColor } from "./utils.js";
-import { t, materialName } from "./i18n.js";
+import { t, materialName, materialSearchText } from "./i18n.js";
 import { colorA, colorB, colorC, colorD } from "./constants.js";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ function normalizeForSearch(text) {
 function buildMaterialOptionsHtml(filterText) {
   const query = normalizeForSearch(filterText);
   const matches = state.loadedMaterials.filter(mat =>
-    normalizeForSearch(materialName(mat)).includes(query),
+    normalizeForSearch(materialSearchText(mat)).includes(query),
   );
 
   if (matches.length === 0) {

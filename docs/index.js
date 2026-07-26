@@ -13,14 +13,12 @@
 
 // Recipes:
 // - Posibilidad de darle un nombre custom a cada receta
-// - Que en el select de materiales se pueda empezar a escribir el nombre del material y que filtre los resultados, en vez de tener que hacer scroll hasta encontrarlo
-
-// - Complementar el listado de materiales con https://ceramica.name/calculos/aformula
 // - Añadir las fórmulas?
-// - Repasar los nombres alternativos, por ejemplo Creta, no aparece como carbonato cálcico
 
 // Stuhl diagram desarrollado por Derek Philip Au en d3.js
 // https://derekphilipau.github.io/ceramic-chemistry-visualization/charts/d3.html
+
+// Ver cómo facilitar la creación de grillas de Currie
 
 import { state } from "./js/state.js";
 import { loadMaterials } from "./js/materials.js";
