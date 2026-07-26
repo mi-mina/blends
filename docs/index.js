@@ -15,10 +15,14 @@
 
 // Recipes:
 // - Comprobar que los aditivos se calculan correctamente en las recetas
-// - Reordenar las columnas de la tabla para que los aditivos estén al final y no al principio?
-// - Complementar el listado de materiales con https://ceramica.name/calculos/aformula
+// - ¿Qué pasa si los porcentajes de la receta no suman 100? En la tabla deben sumar 100
+// - Esto introduce la pregunta de qué hacer con los porcentajes de los aditivos.
 // - Posibilidad de darle un nombre custom a cada receta
-// - ¿Qué pasa si los porcentajes de la receta no suman 100?
+// - Que en el select de materiales se pueda empezar a escribir el nombre del material y que filtre los resultados, en vez de tener que hacer scroll hasta encontrarlo
+
+// - Complementar el listado de materiales con https://ceramica.name/calculos/aformula
+// - Añadir las fórmulas?
+// - Repasar los nombres alternativos, por ejemplo Creta, no aparece como carbonato cálcico
 
 // Stuhl diagram desarrollado por Derek Philip Au en d3.js
 // https://derekphilipau.github.io/ceramic-chemistry-visualization/charts/d3.html

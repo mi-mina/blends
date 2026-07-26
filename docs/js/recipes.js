@@ -147,27 +147,38 @@ function wireRecipeRow(container, key, select, input, checkbox) {
 function updateRecipeTotal(container) {
   const rows = container.querySelectorAll(RECIPE_ROW_SELECTOR);
 
-  let total = 0;
   let baseTotal = 0;
+  let additivesTotal = 0;
+  let hasAdditives = false;
   rows.forEach(row => {
     const input = row.querySelector('input[type="text"]');
     const checkbox = row.querySelector('input[type="checkbox"]');
     const percentage = parseFloat(input?.value) || 0;
 
-    total += percentage;
-    if (!checkbox?.checked) baseTotal += percentage;
+    if (checkbox?.checked) {
+      additivesTotal += percentage;
+      hasAdditives = true;
+    } else {
+      baseTotal += percentage;
+    }
   });
 
-  const wrapper = container.querySelector(".recipe-total");
-  const valueEl = container.querySelector(".recipe-total-value");
-  if (!wrapper || !valueEl) return;
+  const baseLine = container.querySelector(".recipe-total-base");
+  const baseValueEl = container.querySelector(".recipe-total-base-value");
+  const additivesLine = container.querySelector(".recipe-total-additives");
+  const additivesValueEl = container.querySelector(
+    ".recipe-total-additives-value",
+  );
+  if (!baseLine || !baseValueEl || !additivesLine || !additivesValueEl) return;
 
-  valueEl.textContent = `${roundTo(total)}%`;
+  baseValueEl.textContent = `${roundTo(baseTotal)}%`;
+  additivesValueEl.textContent = `${roundTo(additivesTotal)}%`;
+  additivesLine.classList.toggle("hidden", !hasAdditives);
 
   const isComplete = roundTo(baseTotal) === 100;
-  wrapper.classList.toggle("text-gray-500", !isComplete);
-  wrapper.classList.toggle("text-black", isComplete);
-  wrapper.classList.toggle("font-bold", isComplete);
+  baseLine.classList.toggle("text-gray-500", !isComplete);
+  baseLine.classList.toggle("text-black", isComplete);
+  baseLine.classList.toggle("font-bold", isComplete);
 }
 
 /**
@@ -435,7 +446,11 @@ function getCornerLetter(point) {
  */
 export function renderRecipesTable() {
   const container = document.getElementById("recipes-table-container");
-  const selectedMaterials = getSelectedMaterials();
+  const { nonAdditive, additiveOnly } = partitionSelectedMaterials();
+  const selectedMaterials = [...nonAdditive, ...additiveOnly];
+  // Index of the first additive-only column, so it can get a divider on
+  // its left - only meaningful when there are regular ingredients too.
+  const additiveStart = nonAdditive.length > 0 ? nonAdditive.length : -1;
   const blendType = document.getElementById("blendType").value;
 
   let numRows = 0;
@@ -456,15 +471,30 @@ export function renderRecipesTable() {
   }
 
   let html = `
-    <h3 class="text-lg font-semibold mb-2">${t("recipesTableTitle", { count: numRows })}</h3>
+    <div class="inline-block">
+    <h3 class="w-full bg-gray-300 text-gray-800 text-lg font-semibold text-center px-3 py-1.5 rounded-t">${t("recipesTableTitle", { count: numRows })}</h3>
     <table class="border-collapse text-sm">
     <thead>
+      ${
+        additiveOnly.length > 0
+          ? `<tr>
+        <th class="px-2 py-1"></th>
+        ${
+          nonAdditive.length > 0
+            ? `<th class="px-2 py-1 text-left font-normal text-gray-500" colspan="${nonAdditive.length}">${t("baseMaterialsLabel")}</th>`
+            : ""
+        }
+        <th class="px-2 py-1 text-left font-normal text-gray-500 border-l border-l-gray-300" colspan="${additiveOnly.length}">${t("additivesLabel")}</th>
+      </tr>`
+          : ""
+      }
       <tr>
-        <th class="border-b-2 border-gray-500 px-2 py-1 text-left">#</th>
+        <th class="border-b-2 border-b-gray-500 px-2 py-1 text-left">#</th>
         ${selectedMaterials
-          .map(mat => {
+          .map((mat, idx) => {
             const name = materialName(state.materialsById[mat]);
-            return `<th class="border-b-2 border-gray-500 px-2 py-1 text-left max-w-[200px] truncate" title="${name}">${name}</th>`;
+            const divider = idx === additiveStart ? " border-l border-l-gray-300" : "";
+            return `<th class="border-b-2 border-b-gray-500 px-2 py-1 text-left max-w-[200px] truncate${divider}" title="${name}">${name}</th>`;
           })
           .join("")}
       </tr>
@@ -485,12 +515,13 @@ export function renderRecipesTable() {
       <tr>
         <td class="border-b-2 px-2 py-1 text-center${cornerLetter ? " font-bold" : ""}" style="background-color:${pointColor};color:${pointTextColor};${rowBorderStyle}">${numberLabel}</td>
         ${selectedMaterials
-          .map(materialId => {
+          .map((materialId, idx) => {
             const materialPercentage = getMaterialPercentageAtPoint(
               recipeNumber,
               materialId,
             );
-            return `<td class="border-b-2 px-2 py-1" style="${rowBorderStyle}">${roundTo(
+            const divider = idx === additiveStart ? " border-l border-l-gray-300" : "";
+            return `<td class="border-b-2 px-2 py-1${divider}" style="${rowBorderStyle}">${roundTo(
               materialPercentage,
             )}%</td>`;
           })
@@ -498,27 +529,41 @@ export function renderRecipesTable() {
       </tr>
     `;
   }
-  html += `</tbody></table>`;
+  html += `</tbody></table></div>`;
 
   container.innerHTML = html;
 }
 
 /**
- * A material only shows up in the recipes table once its row has both
- * a material selected and a percentage filled in.
+ * Splits the materials used across all recipes into regular ingredients
+ * and additive-only ones (used exclusively as an additive, never as a
+ * regular ingredient, in any recipe). A material only counts at all
+ * once its row has both a material selected and a percentage filled in.
  */
-export function getSelectedMaterials() {
+function partitionSelectedMaterials() {
   const rows = document.querySelectorAll(RECIPE_ROW_SELECTOR);
-  const materials = [];
+  const nonAdditive = [];
+  const additive = [];
 
   rows.forEach(row => {
     const select = row.querySelector(".recipe-material-select");
     const input = row.querySelector('input[type="text"]');
-    if (select?.value && input?.value) {
-      materials.push(select.value);
-    }
+    if (!select?.value || !input?.value) return;
+
+    const checkbox = row.querySelector('input[type="checkbox"]');
+    const materials = checkbox?.checked ? additive : nonAdditive;
+    if (!materials.includes(select.value)) materials.push(select.value);
   });
 
-  // Return unique materials
-  return [...new Set(materials)];
+  const additiveOnly = additive.filter(id => !nonAdditive.includes(id));
+  return { nonAdditive, additiveOnly };
+}
+
+/**
+ * All materials that should show up in the recipes table, with
+ * additive-only ones listed last, as their own trailing columns.
+ */
+export function getSelectedMaterials() {
+  const { nonAdditive, additiveOnly } = partitionSelectedMaterials();
+  return [...nonAdditive, ...additiveOnly];
 }
