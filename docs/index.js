@@ -14,9 +14,6 @@
 // - Poder elegir los colores de las esquinas
 
 // Recipes:
-// - Comprobar que los aditivos se calculan correctamente en las recetas
-// - ¿Qué pasa si los porcentajes de la receta no suman 100? En la tabla deben sumar 100
-// - Esto introduce la pregunta de qué hacer con los porcentajes de los aditivos.
 // - Posibilidad de darle un nombre custom a cada receta
 // - Que en el select de materiales se pueda empezar a escribir el nombre del material y que filtre los resultados, en vez de tener que hacer scroll hasta encontrarlo
 

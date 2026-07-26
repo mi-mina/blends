@@ -379,6 +379,23 @@ export function getRecipeData(recipeId) {
  * @param {string} materialId
  * @returns {number}
  */
+/**
+ * Ceramic recipes are conventionally written so the base (non-additive)
+ * ingredients sum to 100%. Users won't always type a base that actually
+ * does, so scale every row - base and additive alike, matching
+ * glazy.org's convention - by whatever factor would make the base hit
+ * 100, rather than using the raw numbers as typed.
+ * @param {Array} recipe - A state.recipes[key] entry.
+ * @returns {number} The scaling factor, or 0 if the recipe has no base
+ * at all (nothing to scale against).
+ */
+function getRecipeNormalizationFactor(recipe) {
+  const baseTotal = recipe
+    .filter(mat => !mat.additive)
+    .reduce((sum, mat) => sum + (parseFloat(mat.percentage) || 0), 0);
+  return baseTotal > 0 ? 100 / baseTotal : 0;
+}
+
 export function getMaterialPercentageAtPoint(point, materialId) {
   // blendData is always generated with sequential point numbers starting
   // at 1 (see blendData.js), so its index in the array is point - 1.
@@ -400,8 +417,10 @@ export function getMaterialPercentageAtPoint(point, materialId) {
     const rowsPercentage = recipe
       .filter(mat => mat.materialId === materialId)
       .reduce((sum, mat) => sum + (parseFloat(mat.percentage) || 0), 0);
+    const normalizedPercentage =
+      rowsPercentage * getRecipeNormalizationFactor(recipe);
 
-    materialPercentage += (recipePercentage * rowsPercentage) / 100;
+    materialPercentage += (recipePercentage * normalizedPercentage) / 100;
   });
 
   return materialPercentage;
@@ -489,7 +508,7 @@ export function renderRecipesTable() {
           : ""
       }
       <tr>
-        <th class="border-b-2 border-b-gray-500 px-2 py-1 text-left">#</th>
+        <th class="border-b-2 border-b-gray-500 px-2 py-1 text-center min-w-[64px] whitespace-nowrap">#</th>
         ${selectedMaterials
           .map((mat, idx) => {
             const name = materialName(state.materialsById[mat]);
@@ -513,7 +532,7 @@ export function renderRecipesTable() {
     const rowBorderStyle = `border-bottom-color:${pointColor}`;
     html += `
       <tr>
-        <td class="border-b-2 px-2 py-1 text-center${cornerLetter ? " font-bold" : ""}" style="background-color:${pointColor};color:${pointTextColor};${rowBorderStyle}">${numberLabel}</td>
+        <td class="border-b-2 px-2 py-1 text-center min-w-[64px] whitespace-nowrap${cornerLetter ? " font-bold" : ""}" style="background-color:${pointColor};color:${pointTextColor};${rowBorderStyle}">${numberLabel}</td>
         ${selectedMaterials
           .map((materialId, idx) => {
             const materialPercentage = getMaterialPercentageAtPoint(
