@@ -1,5 +1,5 @@
 export const pointSide = 54;
-export const pointR = 15;
+export const pointR = 13;
 export const sep = 15;
 
 // Room reserved around the diagram for the corner letters (A, B, C, D),

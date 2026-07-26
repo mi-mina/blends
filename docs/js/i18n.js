@@ -28,6 +28,8 @@ export const translations = {
     recipeAdditive: "Adit.",
     recipeTotalBaseLabel: "Total base:",
     recipeTotalAdditivesLabel: "Total aditivos:",
+    minTotalMlNote:
+      "Cantidad mínima necesaria de cada esmalte de las esquinas: {amount} ml",
     recipesTableTitle: "Tabla de {count} recetas",
     baseMaterialsLabel: "Materiales de la base",
     additivesLabel: "Aditivos",
@@ -95,6 +97,8 @@ export const translations = {
     recipeAdditive: "Add.",
     recipeTotalBaseLabel: "Base total:",
     recipeTotalAdditivesLabel: "Additives total:",
+    minTotalMlNote:
+      "Minimum amount needed of each corner glaze: {amount} ml",
     recipesTableTitle: "Table of {count} recipes",
     baseMaterialsLabel: "Base materials",
     additivesLabel: "Additives",

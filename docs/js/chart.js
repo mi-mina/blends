@@ -157,6 +157,7 @@ function renderBlendChart(
     .attr("y", 0)
     .attr("dy", "0.35em")
     .attr("text-anchor", "middle")
+    .style("font-size", "0.8em")
     .text(d => d.point);
 
   // Corner letter (A, B, C, D), outside the pure corner points only

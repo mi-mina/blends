@@ -22,6 +22,7 @@
 
 import { state } from "./js/state.js";
 import { loadMaterials } from "./js/materials.js";
+import { roundTo } from "./js/utils.js";
 import {
   getLinearData,
   getTriaxialData,
@@ -232,6 +233,19 @@ function drawBlend() {
 
   document.getElementById("total-points-value").textContent =
     state.blendData.length;
+
+  // Every point's corner percentages sum to 100%, so across the whole
+  // diagram each corner ends up needing an equal (symmetric) share of
+  // the total ml poured - just the grand total divided by corner count.
+  const totalMl = state.blendData.reduce(
+    (sum, point) =>
+      sum + Object.values(point.ml).reduce((s, ml) => s + ml, 0),
+    0,
+  );
+  const numCorners = Object.keys(state.blendData[0].ml).length;
+  document.getElementById("min-ml-note").textContent = t("minTotalMlNote", {
+    amount: roundTo(totalMl / numCorners),
+  });
 
   renderRecipesTable();
 }
