@@ -291,9 +291,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -318,7 +334,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -332,9 +348,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -359,7 +391,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -373,9 +405,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -400,7 +448,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -414,9 +462,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -441,7 +505,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -499,9 +563,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -526,7 +606,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -540,9 +620,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -567,7 +663,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -581,9 +677,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -608,7 +720,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -622,9 +734,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -649,7 +777,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -706,9 +834,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -733,7 +877,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -747,9 +891,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -774,7 +934,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -788,9 +948,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -815,7 +991,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -829,9 +1005,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -856,7 +1048,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -913,9 +1105,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -940,7 +1148,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -954,9 +1162,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -981,7 +1205,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -995,9 +1219,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -1022,7 +1262,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />
@@ -1036,9 +1276,25 @@
                 <div class="mb-2 flex items-center">
                   <div class="flex flex-col flex-1 mr-2 relative">
                     <select
-                      class="border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 recipe-material-select appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      class="recipe-material-select hidden"
+                      tabindex="-1"
+                      aria-hidden="true"
                     ></select>
+                    <input
+                      type="text"
+                      class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
+                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      autocomplete="off"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-autocomplete="list"
+                      data-i18n-placeholder="selectMaterialOption"
+                      placeholder="Selecciona un material"
+                    />
+                    <ul
+                      class="recipe-material-dropdown hidden z-30 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow text-sm"
+                      role="listbox"
+                    ></ul>
                     <button
                       type="button"
                       class="recipe-clear-material-button hidden absolute inset-y-0 right-7 flex items-center text-gray-400 hover:text-gray-600"
@@ -1063,7 +1319,7 @@
                   </div>
                   <div class="flex flex-col w-1/6">
                     <input
-                      class="border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      class="recipe-percentage-input border border-gray-300 px-2 py-1 w-full h-10 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       type="text"
                       placeholder="0%"
                     />

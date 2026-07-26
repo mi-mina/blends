@@ -28,21 +28,20 @@ export function populateRecipeMaterialSelects() {
     const previousValue = select.value;
     select.innerHTML = options;
     select.value = previousValue;
-    // Set initial class based on value
-    if (!select.value) {
-      select.classList.add("text-gray-400");
-    } else {
-      select.classList.remove("text-gray-400");
-    }
 
-    // Upadate text color based on selection
-    select.addEventListener("change", () => {
-      if (select.value) {
-        select.classList.remove("text-gray-400");
-      } else {
-        select.classList.add("text-gray-400");
-      }
-    });
+    // The select itself is hidden (see wireMaterialCombobox) - refresh
+    // the visible search input's text too, in case a language switch
+    // changed the selected material's translated name.
+    const input = select.parentElement.querySelector(
+      ".recipe-material-input",
+    );
+    if (input) {
+      const selectedMaterial = select.value
+        ? state.materialsById[select.value]
+        : null;
+      input.value = selectedMaterial ? materialName(selectedMaterial) : "";
+      input.classList.toggle("text-gray-400", !select.value);
+    }
   });
 }
 
@@ -57,6 +56,161 @@ const RECIPE_CARDS = [
 
 const RECIPE_ROW_SELECTOR = ".mb-2.flex.items-center";
 const ORIGINAL_ROWS_PER_CARD = 4;
+
+/**
+ * Case- and accent-insensitive substring match, so typing "carbonico"
+ * still finds "Carbónico".
+ */
+function normalizeForSearch(text) {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+/**
+ * Builds the <li> options for a material dropdown, filtered by
+ * whatever the user has typed so far (empty string shows everything).
+ */
+function buildMaterialOptionsHtml(filterText) {
+  const query = normalizeForSearch(filterText);
+  const matches = state.loadedMaterials.filter(mat =>
+    normalizeForSearch(materialName(mat)).includes(query),
+  );
+
+  if (matches.length === 0) {
+    return `<li class="px-2 py-1.5 text-gray-400 italic">${t("noMaterialMatches")}</li>`;
+  }
+
+  return matches
+    .map(
+      mat =>
+        `<li class="recipe-material-option px-2 py-1.5 cursor-pointer hover:bg-blue-50" data-material-id="${mat.materialId}" role="option">${materialName(mat)}</li>`,
+    )
+    .join("");
+}
+
+/**
+ * Wires a recipe row's material search box: a text input that filters a
+ * capped-height dropdown of materials as the user types, backed by the
+ * hidden <select> that the rest of the app still reads/writes exactly
+ * as before (so every other piece of recipe logic needs no changes).
+ */
+function wireMaterialCombobox(select, input, dropdown) {
+  // The recipe card clips overflowing children (see applyRecipeCardColors'
+  // rounded corners), which would clip this dropdown too since it needs
+  // to stick out below the card sometimes. While open, move it to <body>
+  // and position it with fixed coordinates instead; move it back to its
+  // original spot on close, so cloneNode() (new rows) still copies a
+  // complete row.
+  const wrapper = select.parentElement;
+  let highlightedIndex = -1;
+
+  const syncInputFromSelect = () => {
+    const selectedMaterial = select.value
+      ? state.materialsById[select.value]
+      : null;
+    input.value = selectedMaterial ? materialName(selectedMaterial) : "";
+    input.classList.toggle("text-gray-400", !select.value);
+  };
+  syncInputFromSelect();
+  select.addEventListener("change", syncInputFromSelect);
+
+  const positionDropdown = () => {
+    const rect = input.getBoundingClientRect();
+    dropdown.style.position = "fixed";
+    dropdown.style.left = `${rect.left}px`;
+    dropdown.style.top = `${rect.bottom + 4}px`;
+    dropdown.style.width = `${rect.width}px`;
+  };
+
+  const closeDropdown = () => {
+    dropdown.classList.add("hidden");
+    wrapper.appendChild(dropdown);
+    window.removeEventListener("scroll", handleOutsideScroll, true);
+    input.setAttribute("aria-expanded", "false");
+    highlightedIndex = -1;
+  };
+
+  // The dropdown is fixed to the input's on-screen position, so close it
+  // instead of leaving it stranded if the page scrolls underneath - but
+  // not when the scroll is the dropdown's own list scrolling internally.
+  const handleOutsideScroll = event => {
+    if (dropdown.contains(event.target)) return;
+    closeDropdown();
+  };
+
+  const openDropdown = filterText => {
+    dropdown.innerHTML = buildMaterialOptionsHtml(filterText);
+    document.body.appendChild(dropdown);
+    positionDropdown();
+    dropdown.classList.remove("hidden");
+    window.addEventListener("scroll", handleOutsideScroll, true);
+    input.setAttribute("aria-expanded", "true");
+    highlightedIndex = -1;
+  };
+
+  const highlightOption = index => {
+    const options = dropdown.querySelectorAll(".recipe-material-option");
+    options.forEach((option, i) => {
+      option.classList.toggle("bg-blue-100", i === index);
+    });
+    options[index]?.scrollIntoView({ block: "nearest" });
+  };
+
+  const selectMaterial = materialId => {
+    select.value = materialId;
+    select.dispatchEvent(new Event("change"));
+    closeDropdown();
+  };
+
+  input.addEventListener("input", () => openDropdown(input.value));
+  input.addEventListener("focus", () => {
+    input.select();
+    openDropdown("");
+  });
+
+  input.addEventListener("keydown", event => {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      if (dropdown.classList.contains("hidden")) {
+        openDropdown(input.value);
+        return;
+      }
+      const options = dropdown.querySelectorAll(".recipe-material-option");
+      if (options.length === 0) return;
+      const delta = event.key === "ArrowDown" ? 1 : -1;
+      highlightedIndex =
+        (highlightedIndex + delta + options.length) % options.length;
+      highlightOption(highlightedIndex);
+    } else if (event.key === "Enter") {
+      const options = dropdown.querySelectorAll(".recipe-material-option");
+      const chosen = options[highlightedIndex];
+      if (chosen) {
+        event.preventDefault();
+        selectMaterial(chosen.dataset.materialId);
+      }
+    } else if (event.key === "Escape") {
+      closeDropdown();
+      syncInputFromSelect();
+    }
+  });
+
+  // mousedown (not click) fires before the input's blur, and calling
+  // preventDefault() on it stops that blur from firing at all - so the
+  // selection below runs before any blur-triggered cleanup can undo it.
+  dropdown.addEventListener("mousedown", event => {
+    const option = event.target.closest(".recipe-material-option");
+    if (!option) return;
+    event.preventDefault();
+    selectMaterial(option.dataset.materialId);
+  });
+
+  input.addEventListener("blur", () => {
+    closeDropdown();
+    syncInputFromSelect();
+  });
+}
 
 /**
  * Wires up a single recipe row: saving state/re-rendering on change,
@@ -75,6 +229,12 @@ function wireRecipeRow(container, key, select, input, checkbox) {
       updateRecipeTotal(container);
     });
   });
+
+  wireMaterialCombobox(
+    select,
+    select.parentElement.querySelector(".recipe-material-input"),
+    select.parentElement.querySelector(".recipe-material-dropdown"),
+  );
 
   // A percentage only makes sense once its row has a material selected,
   // so keep the percentage input disabled (and empty) until then.
@@ -151,7 +311,7 @@ function updateRecipeTotal(container) {
   let additivesTotal = 0;
   let hasAdditives = false;
   rows.forEach(row => {
-    const input = row.querySelector('input[type="text"]');
+    const input = row.querySelector('.recipe-percentage-input');
     const checkbox = row.querySelector('input[type="checkbox"]');
     const percentage = parseFloat(input?.value) || 0;
 
@@ -191,7 +351,7 @@ function addRecipeRow(container, key) {
   const newRow = lastRow.cloneNode(true);
 
   const select = newRow.querySelector(".recipe-material-select");
-  const input = newRow.querySelector('input[type="text"]');
+  const input = newRow.querySelector('.recipe-percentage-input');
   const checkbox = newRow.querySelector('input[type="checkbox"]');
   select.value = "";
   input.value = "";
@@ -201,18 +361,16 @@ function addRecipeRow(container, key) {
   // since the "Total: x%" block now comes after the rows.
   lastRow.insertAdjacentElement("afterend", newRow);
 
+  // wireRecipeRow (via wireMaterialCombobox) re-adds the listeners that
+  // cloneNode() didn't copy, and its initial sync call picks up the
+  // select.value = "" above to reset the visible search input too.
   wireRecipeRow(container, key, select, input, checkbox);
-  // cloneNode() copies the source select's <option>s but none of its
-  // listeners, so re-add the text-gray-400 toggle for this new select.
-  select.addEventListener("change", () => {
-    select.classList.toggle("text-gray-400", !select.value);
-  });
 }
 
 RECIPE_CARDS.forEach(({ recipeId, key }) => {
   const container = document.getElementById(recipeId);
   const selects = container.querySelectorAll(".recipe-material-select");
-  const inputs = container.querySelectorAll('input[type="text"]');
+  const inputs = container.querySelectorAll('.recipe-percentage-input');
   const checkboxes = container.querySelectorAll('input[type="checkbox"]');
 
   selects.forEach((select, i) => {
@@ -254,7 +412,7 @@ export function loadRecipesFromLocalStorage() {
     // auto-adds a new one, which the next iteration needs to see.
     recipeData.forEach((row, i) => {
       const selects = container.querySelectorAll(".recipe-material-select");
-      const inputs = container.querySelectorAll('input[type="text"]');
+      const inputs = container.querySelectorAll('.recipe-percentage-input');
       const checkboxes = container.querySelectorAll('input[type="checkbox"]');
 
       if (selects[i]) {
@@ -299,9 +457,14 @@ function clearRecipeCard(recipeId, key) {
 
   container.querySelectorAll(".recipe-material-select").forEach(select => {
     select.value = "";
-    select.classList.add("text-gray-400");
   });
-  container.querySelectorAll('input[type="text"]').forEach(input => {
+  // Reset directly rather than via a "change" event, so also reset the
+  // visible search input's text/style by hand (see wireMaterialCombobox).
+  container.querySelectorAll(".recipe-material-input").forEach(input => {
+    input.value = "";
+    input.classList.add("text-gray-400");
+  });
+  container.querySelectorAll('.recipe-percentage-input').forEach(input => {
     input.value = "";
     input.disabled = true;
   });
@@ -352,7 +515,7 @@ export function clearRecipesBeyondBlendType(blendType) {
 export function getRecipeData(recipeId) {
   const recipe = document.getElementById(recipeId);
   const selects = recipe.querySelectorAll(".recipe-material-select");
-  const inputs = recipe.querySelectorAll('input[type="text"]');
+  const inputs = recipe.querySelectorAll('.recipe-percentage-input');
   const checkboxes = recipe.querySelectorAll('input[type="checkbox"]');
   const data = [];
 
@@ -372,14 +535,6 @@ export function getRecipeData(recipeId) {
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * Computes what percentage of a given material ends up in the blend at a
- * specific point, by combining each recipe's material percentage with how
- * much of that recipe's corner is present at that point.
- * @param {number} point - Point number, as in blendData[].point.
- * @param {string} materialId
- * @returns {number}
- */
-/**
  * Ceramic recipes are conventionally written so the base (non-additive)
  * ingredients sum to 100%. Users won't always type a base that actually
  * does, so scale every row - base and additive alike, matching
@@ -396,6 +551,14 @@ function getRecipeNormalizationFactor(recipe) {
   return baseTotal > 0 ? 100 / baseTotal : 0;
 }
 
+/**
+ * Computes what percentage of a given material ends up in the blend at a
+ * specific point, by combining each recipe's material percentage with how
+ * much of that recipe's corner is present at that point.
+ * @param {number} point - Point number, as in blendData[].point.
+ * @param {string} materialId
+ * @returns {number}
+ */
 export function getMaterialPercentageAtPoint(point, materialId) {
   // blendData is always generated with sequential point numbers starting
   // at 1 (see blendData.js), so its index in the array is point - 1.
@@ -566,7 +729,7 @@ function partitionSelectedMaterials() {
 
   rows.forEach(row => {
     const select = row.querySelector(".recipe-material-select");
-    const input = row.querySelector('input[type="text"]');
+    const input = row.querySelector('.recipe-percentage-input');
     if (!select?.value || !input?.value) return;
 
     const checkbox = row.querySelector('input[type="checkbox"]');

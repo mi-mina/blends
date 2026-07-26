@@ -4,9 +4,7 @@
 // TODO
 // - Que se pueda descargar tanto el diagrama como las recetas en un formato que luego se pueda cargar de nuevo (por ejemplo, un JSON con los datos de la mezcla y las recetas, o un CSV con las recetas).
 // - Banner, la proporción de los espirógrafos no se mantiene al cambiar el tamaño de la ventana, hacer que se mantenga la proporción.
-// - Ver que todos los elementos tengan el mismo radio de curvatura en las esquinas, y que sea consistente con el resto de la web.
 // - Ver cómo reorganizar las acciones, sobre todo descargar y limpiar
-// - Ver que todos los labels de los inputs tengan el mismo estilo, y que sea consistente con el resto de la web.
 
 // Improve:
 // - Calcular cuántos ml hacen falta de cada esmalte de los extremos

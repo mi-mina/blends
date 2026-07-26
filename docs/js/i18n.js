@@ -33,6 +33,7 @@ export const translations = {
     additivesLabel: "Aditivos",
     selectMaterialOption: "Selecciona un material",
     removeMaterialLabel: "Quitar material",
+    noMaterialMatches: "Sin resultados",
     aboutTitle: "Sobre esta página",
     aboutIntro:
       "Esta herramienta genera diagramas de mezclas —lineales, triaxiales y biaxiales— para ayudarte a diseñar pruebas de esmaltes cerámicos usando el método volumétrico. Empecé haciéndola para mis propios experimentos y la comparto aquí por si a alguien más le resulta útil.",
@@ -99,6 +100,7 @@ export const translations = {
     additivesLabel: "Additives",
     selectMaterialOption: "Select a material",
     removeMaterialLabel: "Remove material",
+    noMaterialMatches: "No matches",
     aboutTitle: "About this page",
     aboutIntro:
       "This tool generates blend diagrams —linear, triaxial and biaxial— to help you design ceramic glaze tests using the volumetric method. I started building it for my own experiments and I'm sharing it here in case it's useful to someone else.",
