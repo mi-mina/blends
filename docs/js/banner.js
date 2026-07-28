@@ -98,6 +98,7 @@ import { colorA, colorB, colorC, colorD } from "./constants.js";
     p.setup = () => {
       const c = p.createCanvas(container.clientWidth, container.clientHeight);
       c.parent(container);
+      c.attribute("aria-hidden", "true");
       p.noLoop();
 
       const shapes = pickDistinct(shapeOptions, positions.length);

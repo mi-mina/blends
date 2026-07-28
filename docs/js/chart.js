@@ -9,7 +9,13 @@ import {
   colorC,
   colorD,
 } from "./constants.js";
-import { blendColors, formatNumber, formatPercentage } from "./utils.js";
+import {
+  blendColors,
+  formatNumber,
+  formatPercentage,
+  getContrastTextColor,
+} from "./utils.js";
+import { t } from "./i18n.js";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Functions to draw blends ///////////////////////////////////////////////////
@@ -98,6 +104,9 @@ function clearGraph() {
  * @param {Map<number, Object>} [options.cornerLabels] - Maps a point number
  * to { letter, x, y, anchor } for the pure corner it represents. x/y are
  * relative to that point's own origin, positioned outside its boxes.
+ * @param {string} options.ariaLabel - Accessible name for the diagram,
+ * since it's otherwise just shapes/text with no name a screen reader
+ * would announce (the same data is also available as the recipes table).
  */
 function renderBlendChart(
   data,
@@ -108,6 +117,7 @@ function renderBlendChart(
     chartTransform,
     pointTransform,
     cornerLabels,
+    ariaLabel,
   }
 ) {
   const svg = d3
@@ -115,6 +125,8 @@ function renderBlendChart(
     .append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight)
+    .attr("role", "img")
+    .attr("aria-label", ariaLabel)
     .style("user-select", "none")
     .style("font-family", "ui-sans-serif, system-ui, sans-serif");
 
@@ -151,7 +163,10 @@ function renderBlendChart(
     .style("stroke", "black")
     .style("stroke-width", 1);
 
-  // Point number
+  // Point number - same blended color as the circle it sits on, so its
+  // contrast is computed rather than assuming black always reads fine
+  // (true for every single corner color here, but not guaranteed once
+  // they're blended together).
   pointContainer
     .append("text")
     .attr("x", 0)
@@ -159,6 +174,9 @@ function renderBlendChart(
     .attr("dy", "0.35em")
     .attr("text-anchor", "middle")
     .style("font-size", "0.8em")
+    .style("fill", d =>
+      getContrastTextColor(blendColors(colors, Object.values(d.percentages))),
+    )
     .text(d => d.point);
 
   // Corner letter (A, B, C, D), outside the pure corner points only
@@ -243,6 +261,10 @@ export function drawLinearBlend(data) {
       return `translate(${x}, ${y})`;
     },
     cornerLabels,
+    ariaLabel: t("diagramAriaLabel", {
+      blendType: t("blendTypeLine"),
+      count: data.length,
+    }),
   });
 
   return { x: margin.left, y: svgHeight - verticalGutter };
@@ -329,6 +351,10 @@ export function drawTriaxialBlend(data) {
       return `translate(${x}, ${y})`;
     },
     cornerLabels,
+    ariaLabel: t("diagramAriaLabel", {
+      blendType: t("blendTypeTriaxial"),
+      count: data.length,
+    }),
   });
 
   return {
@@ -429,6 +455,10 @@ export function drawBiaxialBlend(data) {
       return `translate(${x}, ${y})`;
     },
     cornerLabels,
+    ariaLabel: t("diagramAriaLabel", {
+      blendType: t("blendTypeBiaxial"),
+      count: data.length,
+    }),
   });
 
   return {

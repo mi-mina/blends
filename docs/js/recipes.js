@@ -42,6 +42,13 @@ export function populateRecipeMaterialSelects() {
       input.value = selectedMaterial ? materialName(selectedMaterial) : "";
       input.classList.toggle("text-gray-400", !select.value);
     }
+
+    const row = select.closest(RECIPE_ROW_SELECTOR);
+    const percentageInput = row?.querySelector(".recipe-percentage-input");
+    const checkbox = row?.querySelector('input[type="checkbox"]');
+    if (percentageInput && checkbox) {
+      syncRowAccessibleLabels(select, percentageInput, checkbox);
+    }
   });
 }
 
@@ -71,8 +78,11 @@ function normalizeForSearch(text) {
 /**
  * Builds the <li> options for a material dropdown, filtered by
  * whatever the user has typed so far (empty string shows everything).
+ * Each option gets an id derived from the listbox's own id, so the
+ * input's aria-activedescendant can point at whichever one is
+ * highlighted.
  */
-function buildMaterialOptionsHtml(filterText) {
+function buildMaterialOptionsHtml(filterText, listboxId) {
   const query = normalizeForSearch(filterText);
   const matches = state.loadedMaterials.filter(mat =>
     normalizeForSearch(materialSearchText(mat)).includes(query),
@@ -84,11 +94,13 @@ function buildMaterialOptionsHtml(filterText) {
 
   return matches
     .map(
-      mat =>
-        `<li class="recipe-material-option px-2 py-1.5 cursor-pointer hover:bg-blue-50" data-material-id="${mat.materialId}" role="option">${materialName(mat)}</li>`,
+      (mat, i) =>
+        `<li id="${listboxId}-option-${i}" class="recipe-material-option px-2 py-1.5 cursor-pointer hover:bg-blue-50" data-material-id="${mat.materialId}" role="option">${materialName(mat)}</li>`,
     )
     .join("");
 }
+
+let comboboxIdCounter = 0;
 
 /**
  * Wires a recipe row's material search box: a text input that filters a
@@ -105,6 +117,12 @@ function wireMaterialCombobox(select, input, dropdown) {
   // complete row.
   const wrapper = select.parentElement;
   let highlightedIndex = -1;
+
+  // Always assign a fresh id: cloneNode() (new rows) copies whatever id
+  // the dropdown already had, and every combobox on the page needs a
+  // unique one for aria-controls/aria-activedescendant to be meaningful.
+  dropdown.id = `recipe-combobox-${comboboxIdCounter++}-listbox`;
+  input.setAttribute("aria-controls", dropdown.id);
 
   const syncInputFromSelect = () => {
     const selectedMaterial = select.value
@@ -129,6 +147,7 @@ function wireMaterialCombobox(select, input, dropdown) {
     wrapper.appendChild(dropdown);
     window.removeEventListener("scroll", handleOutsideScroll, true);
     input.setAttribute("aria-expanded", "false");
+    input.removeAttribute("aria-activedescendant");
     highlightedIndex = -1;
   };
 
@@ -141,7 +160,7 @@ function wireMaterialCombobox(select, input, dropdown) {
   };
 
   const openDropdown = filterText => {
-    dropdown.innerHTML = buildMaterialOptionsHtml(filterText);
+    dropdown.innerHTML = buildMaterialOptionsHtml(filterText, dropdown.id);
     document.body.appendChild(dropdown);
     positionDropdown();
     dropdown.classList.remove("hidden");
@@ -155,13 +174,24 @@ function wireMaterialCombobox(select, input, dropdown) {
     options.forEach((option, i) => {
       option.classList.toggle("bg-blue-100", i === index);
     });
-    options[index]?.scrollIntoView({ block: "nearest" });
+    const activeOption = options[index];
+    if (activeOption) {
+      input.setAttribute("aria-activedescendant", activeOption.id);
+      activeOption.scrollIntoView({ block: "nearest" });
+    } else {
+      input.removeAttribute("aria-activedescendant");
+    }
   };
 
   const selectMaterial = materialId => {
+    // Close (and so return the dropdown to its spot inside this row)
+    // before dispatching "change": that event can synchronously clone
+    // this row (see the "auto-add a new row" listener below), and the
+    // clone needs its own dropdown along for the ride - which isn't
+    // there if it's still sitting in document.body from being open.
+    closeDropdown();
     select.value = materialId;
     select.dispatchEvent(new Event("change"));
-    closeDropdown();
   };
 
   input.addEventListener("input", () => openDropdown(input.value));
@@ -182,6 +212,13 @@ function wireMaterialCombobox(select, input, dropdown) {
       const delta = event.key === "ArrowDown" ? 1 : -1;
       highlightedIndex =
         (highlightedIndex + delta + options.length) % options.length;
+      highlightOption(highlightedIndex);
+    } else if (event.key === "Home" || event.key === "End") {
+      if (dropdown.classList.contains("hidden")) return;
+      const options = dropdown.querySelectorAll(".recipe-material-option");
+      if (options.length === 0) return;
+      event.preventDefault();
+      highlightedIndex = event.key === "Home" ? 0 : options.length - 1;
       highlightOption(highlightedIndex);
     } else if (event.key === "Enter") {
       const options = dropdown.querySelectorAll(".recipe-material-option");
@@ -210,6 +247,29 @@ function wireMaterialCombobox(select, input, dropdown) {
     closeDropdown();
     syncInputFromSelect();
   });
+}
+
+/**
+ * Names a row's percentage input and "additive" checkbox after its
+ * selected material, since both otherwise have no label of their own
+ * (only a column header shared by the whole card).
+ */
+function syncRowAccessibleLabels(select, percentageInput, checkbox) {
+  const selectedMaterial = select.value
+    ? state.materialsById[select.value]
+    : null;
+  const name = selectedMaterial ? materialName(selectedMaterial) : null;
+
+  percentageInput.setAttribute(
+    "aria-label",
+    name
+      ? t("percentageAriaLabel", { material: name })
+      : t("percentageAriaLabelEmpty"),
+  );
+  checkbox.setAttribute(
+    "aria-label",
+    name ? t("additiveAriaLabel", { material: name }) : t("additiveAriaLabelEmpty"),
+  );
 }
 
 /**
@@ -244,6 +304,15 @@ function wireRecipeRow(container, key, select, input, checkbox) {
   };
   syncPercentageInput();
   select.addEventListener("change", syncPercentageInput);
+
+  // Neither the percentage input nor the "additive" checkbox has a
+  // visible label of its own (only column headers shared across the
+  // whole card) - give each an aria-label naming its row's material, so
+  // a screen reader doesn't just announce a bare "textbox"/"checkbox".
+  syncRowAccessibleLabels(select, input, checkbox);
+  select.addEventListener("change", () =>
+    syncRowAccessibleLabels(select, input, checkbox),
+  );
 
   // Show a small "x" button to clear this row's material, instead of
   // requiring the user to reopen the select and pick the blank option.
@@ -728,20 +797,20 @@ export function renderRecipesTable() {
         <th class="px-2 py-1"></th>
         ${
           nonAdditive.length > 0
-            ? `<th class="px-2 py-1 text-left font-normal text-gray-500" colspan="${nonAdditive.length}">${t("baseMaterialsLabel")}</th>`
+            ? `<th scope="colgroup" class="px-2 py-1 text-left font-normal text-gray-500" colspan="${nonAdditive.length}">${t("baseMaterialsLabel")}</th>`
             : ""
         }
-        <th class="px-2 py-1 text-left font-normal text-gray-500 border-l border-l-gray-300" colspan="${additiveOnly.length}">${t("additivesLabel")}</th>
+        <th scope="colgroup" class="px-2 py-1 text-left font-normal text-gray-500 border-l border-l-gray-300" colspan="${additiveOnly.length}">${t("additivesLabel")}</th>
       </tr>`
           : ""
       }
       <tr>
-        <th class="border-b-2 border-b-gray-500 px-2 py-1 text-center min-w-[64px] whitespace-nowrap">#</th>
+        <th scope="col" class="border-b-2 border-b-gray-500 px-2 py-1 text-center min-w-[64px] whitespace-nowrap">#</th>
         ${selectedMaterials
           .map((mat, idx) => {
             const name = materialName(state.materialsById[mat]);
             const divider = idx === additiveStart ? " border-l border-l-gray-300" : "";
-            return `<th class="border-b-2 border-b-gray-500 px-2 py-1 text-left max-w-[200px] truncate${divider}" title="${name}">${name}</th>`;
+            return `<th scope="col" class="border-b-2 border-b-gray-500 px-2 py-1 text-left max-w-[200px] truncate${divider}" title="${name}">${name}</th>`;
           })
           .join("")}
       </tr>

@@ -88,12 +88,16 @@ export function showTab(tab, onShowGraph) {
   tabGraph.classList.toggle("text-blue-600", tab === "graph");
   tabGraph.classList.toggle("border-transparent", tab !== "graph");
   tabGraph.classList.toggle("text-gray-600", tab !== "graph");
+  tabGraph.setAttribute("aria-selected", tab === "graph");
+  tabGraph.tabIndex = tab === "graph" ? 0 : -1;
 
   const tabRecipes = document.getElementById("tab-recipes");
   tabRecipes.classList.toggle("border-blue-500", tab === "recipes");
   tabRecipes.classList.toggle("text-blue-600", tab === "recipes");
   tabRecipes.classList.toggle("border-transparent", tab !== "recipes");
   tabRecipes.classList.toggle("text-gray-600", tab !== "recipes");
+  tabRecipes.setAttribute("aria-selected", tab === "recipes");
+  tabRecipes.tabIndex = tab === "recipes" ? 0 : -1;
 
   // Tab contents
   document
@@ -113,6 +117,10 @@ export function showTab(tab, onShowGraph) {
  * Shows a modal with a message and a row of buttons, for choices that
  * don't fit a native confirm()'s single OK/Cancel pair (e.g. offering a
  * third option instead of chaining several confirm() dialogs in a row).
+ * Traps Tab within its buttons, closes on Escape (resolving as whichever
+ * button has value "cancel", if any), and returns focus to whatever
+ * triggered it - a native confirm()/alert() gets all of that for free,
+ * so this custom replacement has to do it by hand.
  * @param {string} message
  * @param {Array<{value: string, label: string, primary?: boolean}>} buttons
  * @returns {Promise<string>} The value of whichever button was clicked.
@@ -122,24 +130,51 @@ export function showActionDialog(message, buttons) {
     const overlay = document.getElementById("confirm-dialog-overlay");
     const messageEl = document.getElementById("confirm-dialog-message");
     const buttonsEl = document.getElementById("confirm-dialog-buttons");
+    const previouslyFocused = document.activeElement;
 
     messageEl.textContent = message;
     buttonsEl.innerHTML = "";
+
+    const close = value => {
+      overlay.classList.add("hidden");
+      overlay.removeEventListener("keydown", handleKeydown);
+      previouslyFocused?.focus();
+      resolve(value);
+    };
 
     buttons.forEach(({ value, label, primary }) => {
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = label;
       button.className = primary
-        ? "px-3 py-1.5 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-        : "px-3 py-1.5 text-sm text-gray-600 hover:text-blue-600 focus:outline-none";
-      button.addEventListener("click", () => {
-        overlay.classList.add("hidden");
-        resolve(value);
-      });
+        ? "px-3 py-1.5 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
+        : "px-3 py-1.5 text-sm text-gray-600 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1";
+      button.addEventListener("click", () => close(value));
       buttonsEl.appendChild(button);
     });
 
+    const handleKeydown = event => {
+      const focusable = [...buttonsEl.querySelectorAll("button")];
+      if (event.key === "Tab" && focusable.length > 0) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      } else if (event.key === "Escape") {
+        const cancelButton = buttons.find(b => b.value === "cancel");
+        if (cancelButton) close("cancel");
+      }
+    };
+    overlay.addEventListener("keydown", handleKeydown);
+
     overlay.classList.remove("hidden");
+    // Land on the first button (Cancelar, by every current caller's
+    // convention) rather than a riskier default action.
+    buttonsEl.querySelector("button")?.focus();
   });
 }

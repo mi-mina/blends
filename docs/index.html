@@ -27,7 +27,7 @@
   </head>
 
   <body>
-    <div class="relative w-full">
+    <header class="relative w-full">
       <div
         id="banner"
         class="relative w-full bg-white overflow-hidden"
@@ -37,8 +37,8 @@
           id="lang-switch"
           class="absolute top-3 right-3 z-20 flex overflow-hidden rounded-lg border border-white/40 bg-white/20 backdrop-blur-sm text-xs font-semibold"
         >
-          <button type="button" data-lang="es" class="px-2 py-1">ES</button>
-          <button type="button" data-lang="en" class="px-2 py-1">EN</button>
+          <button type="button" data-lang="es" aria-pressed="true" class="px-2 py-1">ES</button>
+          <button type="button" data-lang="en" aria-pressed="false" class="px-2 py-1">EN</button>
         </div>
       </div>
 
@@ -57,9 +57,9 @@
           </span>
         </div>
       </h1>
-    </div>
+    </header>
 
-    <div class="p-4">
+    <main class="p-4">
       <div class="flex flex-col md:flex-row h-full">
         <!-- Left Section: Inputs -->
         <div
@@ -206,25 +206,45 @@
         <!-- Right Section: Tabs -->
         <div class="w-full md:w-5/6 p-2 md:pl-6">
           <!-- Tabs -->
-          <div class="border-b border-gray-200 mb-4 flex">
+          <div class="border-b border-gray-200 mb-4 flex" role="tablist">
             <button
               id="tab-graph"
-              class="px-4 py-2 -mb-px border-b-2 border-blue-500 text-blue-600 font-semibold focus:outline-none"
+              role="tab"
+              aria-selected="true"
+              aria-controls="tab-content-graph"
+              tabindex="0"
+              class="px-4 py-2 -mb-px border-b-2 border-blue-500 text-blue-600 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
               data-i18n="tabDiagram"
             >
               Diagrama
             </button>
             <button
               id="tab-recipes"
-              class="px-4 py-2 -mb-px border-b-2 border-transparent text-gray-600 hover:text-blue-600 font-semibold focus:outline-none"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tab-content-recipes"
+              tabindex="-1"
+              class="px-4 py-2 -mb-px border-b-2 border-transparent text-gray-600 hover:text-blue-600 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
               data-i18n="tabRecipes"
             >
               Recetas
             </button>
           </div>
           <!-- Tab Contents -->
-          <div id="tab-content-graph">
-            <div class="relative overflow-x-auto pb-4">
+          <div
+            id="tab-content-graph"
+            role="tabpanel"
+            aria-labelledby="tab-graph"
+            tabindex="0"
+          >
+            <h2 class="sr-only" data-i18n="tabDiagram">Diagrama</h2>
+            <div
+              class="relative overflow-x-auto pb-4"
+              tabindex="0"
+              role="region"
+              aria-label="Diagrama"
+              data-i18n-aria-label="tabDiagram"
+            >
               <div id="graph"></div>
               <p
                 id="min-ml-note"
@@ -234,7 +254,7 @@
             <div class="flex items-center gap-2 mt-4">
               <button
                 id="download-png-button"
-                class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none"
+                class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -256,7 +276,14 @@
             </div>
           </div>
 
-          <div id="tab-content-recipes" class="hidden">
+          <div
+            id="tab-content-recipes"
+            role="tabpanel"
+            aria-labelledby="tab-recipes"
+            tabindex="0"
+            class="hidden"
+          >
+            <h2 class="sr-only" data-i18n="tabRecipes">Recetas</h2>
             <div
               class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(240px,360px))]"
             >
@@ -1430,7 +1457,7 @@
               <div class="flex flex-wrap items-center gap-2">
                 <button
                   id="download-csv-button"
-                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none"
+                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1451,7 +1478,7 @@
                 </button>
                 <button
                   id="export-recipes-button"
-                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none"
+                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1472,7 +1499,7 @@
                 </button>
                 <button
                   id="import-recipes-button"
-                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none"
+                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1500,7 +1527,7 @@
               </div>
               <button
                 id="clear-recipes-button"
-                class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-red-600 hover:text-red-800 hover:underline focus:outline-none"
+                class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-red-600 hover:text-red-800 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-1"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1528,17 +1555,26 @@
             <div
               id="recipes-table-container"
               class="mt-16 w-full overflow-x-auto"
+              tabindex="0"
+              role="region"
+              aria-label="Recetas"
+              data-i18n-aria-label="tabRecipes"
             ></div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <section
       class="mt-4 pt-10 pb-20 px-4 bg-linear-to-br from-[#1a2b4c] to-[#0e5c56]"
+      aria-labelledby="about-heading"
     >
       <div class="max-w-7xl mx-auto">
-        <h2 class="text-3xl font-bold mb-6 text-white" data-i18n="aboutTitle">
+        <h2
+          id="about-heading"
+          class="text-3xl font-bold mb-6 text-white"
+          data-i18n="aboutTitle"
+        >
           Sobre esta página
         </h2>
 
@@ -1637,7 +1673,12 @@
       id="confirm-dialog-overlay"
       class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4"
     >
-      <div class="bg-white rounded shadow-lg max-w-md w-full p-4">
+      <div
+        class="bg-white rounded shadow-lg max-w-md w-full p-4"
+        role="dialog"
+        aria-modal="true"
+        aria-describedby="confirm-dialog-message"
+      >
         <p
           id="confirm-dialog-message"
           class="text-gray-800 whitespace-pre-line mb-4"

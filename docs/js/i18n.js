@@ -33,6 +33,11 @@ export const translations = {
     recipeTotalAdditivesLabel: "Total aditivos:",
     minTotalMlNote:
       "Cantidad mínima necesaria de cada esmalte de las esquinas: {amount} ml",
+    diagramAriaLabel: "Diagrama {blendType} con {count} puntos",
+    percentageAriaLabel: "Porcentaje de {material}",
+    percentageAriaLabelEmpty: "Porcentaje",
+    additiveAriaLabel: "Aditivo: {material}",
+    additiveAriaLabelEmpty: "Aditivo",
     recipesTableTitle: "Tabla de {count} recetas",
     baseMaterialsLabel: "Materiales de la base",
     additivesLabel: "Aditivos",
@@ -116,6 +121,11 @@ export const translations = {
     recipeTotalAdditivesLabel: "Additives total:",
     minTotalMlNote:
       "Minimum amount needed of each corner glaze: {amount} ml",
+    diagramAriaLabel: "{blendType} diagram with {count} points",
+    percentageAriaLabel: "Percentage of {material}",
+    percentageAriaLabelEmpty: "Percentage",
+    additiveAriaLabel: "Additive: {material}",
+    additiveAriaLabelEmpty: "Additive",
     recipesTableTitle: "Table of {count} recipes",
     baseMaterialsLabel: "Base materials",
     additivesLabel: "Additives",
