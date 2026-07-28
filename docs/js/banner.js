@@ -30,9 +30,9 @@ import { colorA, colorB, colorC, colorD } from "./constants.js";
   // es la dimensión que manda para que el recorte quede bien en
   // pantallas anchas).
   const positions = [
-    { xFrac: 0.15, yFrac: 0.1, rFrac: 1.3 },
-    { xFrac: 0.5, yFrac: 0.8, rFrac: 1.5 },
-    { xFrac: 0.85, yFrac: 0.3, rFrac: 1.2 },
+    { xFrac: 0.15, yFrac: 0.1, rFrac: 0.21 },
+    { xFrac: 0.53, yFrac: 0.14, rFrac: 0.24 },
+    { xFrac: 0.87, yFrac: 0.1, rFrac: 0.19 },
   ];
 
   const palette = [colorA, colorB, colorC, colorD];
@@ -116,8 +116,8 @@ import { colorA, colorB, colorC, colorD } from "./constants.js";
       for (const s of spirographs) {
         drawSpirograph(
           p.width * s.xFrac,
-          p.height * s.yFrac,
-          p.height * s.rFrac,
+          p.width * s.yFrac,
+          p.width * s.rFrac,
           s.n,
           s.grad,
           s.colors,
