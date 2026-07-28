@@ -108,3 +108,38 @@ export function showTab(tab, onShowGraph) {
     onShowGraph();
   }
 }
+
+/**
+ * Shows a modal with a message and a row of buttons, for choices that
+ * don't fit a native confirm()'s single OK/Cancel pair (e.g. offering a
+ * third option instead of chaining several confirm() dialogs in a row).
+ * @param {string} message
+ * @param {Array<{value: string, label: string, primary?: boolean}>} buttons
+ * @returns {Promise<string>} The value of whichever button was clicked.
+ */
+export function showActionDialog(message, buttons) {
+  return new Promise(resolve => {
+    const overlay = document.getElementById("confirm-dialog-overlay");
+    const messageEl = document.getElementById("confirm-dialog-message");
+    const buttonsEl = document.getElementById("confirm-dialog-buttons");
+
+    messageEl.textContent = message;
+    buttonsEl.innerHTML = "";
+
+    buttons.forEach(({ value, label, primary }) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = label;
+      button.className = primary
+        ? "px-3 py-1.5 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+        : "px-3 py-1.5 text-sm text-gray-600 hover:text-blue-600 focus:outline-none";
+      button.addEventListener("click", () => {
+        overlay.classList.add("hidden");
+        resolve(value);
+      });
+      buttonsEl.appendChild(button);
+    });
+
+    overlay.classList.remove("hidden");
+  });
+}

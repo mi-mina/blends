@@ -12,6 +12,11 @@ export const margin = {
   left: pointSide + cornerLabelSpace,
 };
 
+// Small gutter used instead of `margin` on sides where nothing (no
+// corner label) needs the extra room - keeps the diagram from having a
+// big dead strip of blank space with nothing anchored to it.
+export const verticalGutter = 32;
+
 export const colorA = "#f15bb5";
 export const colorB = "#00bbf9";
 export const colorC = "#EAF25CFF";

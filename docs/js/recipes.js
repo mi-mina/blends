@@ -384,26 +384,17 @@ function saveRecipesToLocalStorage() {
 }
 
 /**
- * Restores previously saved recipe selections into the DOM. Relies on
- * the existing "change" listeners above to update state.recipes and
- * re-render the table, so it must run after populateRecipeMaterialSelects()
- * (selects need real <option>s for `.value = materialId` to take) and
- * after the first drawBlend() (state.blendData must exist before
- * renderRecipesTable() runs).
+ * Populates every recipe card's DOM from a recipes object shaped like
+ * state.recipes (`{ "1": [{materialId, percentage, additive}, ...], ... }`).
+ * Relies on the existing "change" listeners above to update state.recipes
+ * and re-render the table, so it must run after
+ * populateRecipeMaterialSelects() (selects need real <option>s for
+ * `.value = materialId` to take) and after the first drawBlend()
+ * (state.blendData must exist before renderRecipesTable() runs).
  */
-export function loadRecipesFromLocalStorage() {
-  const saved = localStorage.getItem(RECIPE_STORAGE_KEY);
-  if (!saved) return;
-
-  let savedRecipes;
-  try {
-    savedRecipes = JSON.parse(saved);
-  } catch {
-    return;
-  }
-
+function applyRecipesData(recipesData) {
   RECIPE_CARDS.forEach(({ recipeId, key }) => {
-    const recipeData = savedRecipes[key];
+    const recipeData = recipesData[key];
     if (!recipeData) return;
 
     const container = document.getElementById(recipeId);
@@ -429,6 +420,52 @@ export function loadRecipesFromLocalStorage() {
       }
     });
   });
+}
+
+/**
+ * Restores the previous session's recipe selections from localStorage,
+ * if any (see applyRecipesData() for the DOM/timing requirements).
+ */
+export function loadRecipesFromLocalStorage() {
+  const saved = localStorage.getItem(RECIPE_STORAGE_KEY);
+  if (!saved) return;
+
+  let savedRecipes;
+  try {
+    savedRecipes = JSON.parse(saved);
+  } catch {
+    return;
+  }
+
+  applyRecipesData(savedRecipes);
+}
+
+/**
+ * Replaces every recipe card with the data from a previously exported
+ * JSON file, then persists the result to localStorage like any other
+ * recipe edit. Rows whose materialId no longer exists in materials.json
+ * (e.g. the file was exported before a material was renamed/removed)
+ * are dropped instead of applied.
+ * @param {Object} recipesData - The "recipes" field of an exported file.
+ * @returns {number} How many rows were dropped for having an unknown material.
+ */
+export function importRecipes(recipesData) {
+  clearAllRecipes();
+
+  let droppedRows = 0;
+  const filtered = {};
+  Object.entries(recipesData).forEach(([key, rows]) => {
+    filtered[key] = rows.filter(row => {
+      if (!row.materialId || state.materialsById[row.materialId]) return true;
+      droppedRows++;
+      return false;
+    });
+  });
+
+  applyRecipesData(filtered);
+  saveRecipesToLocalStorage();
+  renderRecipesTable();
+  return droppedRows;
 }
 
 /**
@@ -480,6 +517,36 @@ function clearRecipeCard(recipeId, key) {
 }
 
 /**
+ * How many recipe corners (A/B, A/B/C, or A/B/C/D) a blend type shows.
+ * @param {string} blendType - "line", "triaxial", or "biaxial".
+ * @returns {number}
+ */
+export function getBlendTypeCornerCount(blendType) {
+  if (blendType === "triaxial") return 3;
+  if (blendType === "biaxial") return 4;
+  return 2;
+}
+
+/**
+ * The highest recipe letter (as a corner count, e.g. 3 for "A/B/C") that
+ * has at least one row with a material selected in the given recipes
+ * object - used to warn before an import would silently drop recipes
+ * that don't fit the currently selected blend type.
+ * @param {Object} recipesData - Shaped like state.recipes.
+ * @returns {number}
+ */
+export function countPopulatedCorners(recipesData) {
+  let count = 0;
+  RECIPE_CARDS.forEach(({ key }, idx) => {
+    const rows = recipesData[key];
+    if (Array.isArray(rows) && rows.some(row => row.materialId)) {
+      count = Math.max(count, idx + 1);
+    }
+  });
+  return count;
+}
+
+/**
  * Clears any recipe card beyond what a blend type shows (e.g. cards 3
  * and 4 when switching to "line", which only uses 2). Otherwise their
  * leftover materials/percentages keep counting in getSelectedMaterials()
@@ -489,9 +556,7 @@ function clearRecipeCard(recipeId, key) {
  * @param {string} blendType - "line", "triaxial", or "biaxial".
  */
 export function clearRecipesBeyondBlendType(blendType) {
-  let showCount = 2;
-  if (blendType === "triaxial") showCount = 3;
-  if (blendType === "biaxial") showCount = 4;
+  const showCount = getBlendTypeCornerCount(blendType);
 
   RECIPE_CARDS.forEach(({ recipeId, key }, idx) => {
     if (idx >= showCount) clearRecipeCard(recipeId, key);

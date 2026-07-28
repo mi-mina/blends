@@ -2,23 +2,17 @@
 // https://mimina.goatcounter.com/
 
 // TODO
-// - Que se pueda descargar tanto el diagrama como las recetas en un formato que luego se pueda cargar de nuevo (por ejemplo, un JSON con los datos de la mezcla y las recetas, o un CSV con las recetas).
-// - Banner, la proporción de los espirógrafos no se mantiene al cambiar el tamaño de la ventana, hacer que se mantenga la proporción.
-// - Ver cómo reorganizar las acciones, sobre todo descargar y limpiar
-
-// Improve:
-// - Calcular cuántos ml hacen falta de cada esmalte de los extremos
-// - Hacer que se oculte la parte de la izquierda
-// - Poder elegir los colores de las esquinas
-
-// Recipes:
-// - Posibilidad de darle un nombre custom a cada receta
+// - Revisión de accesibilidad: que se pueda navegar con el teclado, que los inputs tengan labels, etc.
+// - Añadir textos de ayuda en cada input al pasar el ratón por encima?
+// - Crear favicon
 // - Añadir las fórmulas?
+// - Posibilidad de darle un nombre custom a cada receta
+// - Poder elegir los colores de las esquinas
+// - Hacer que se oculte la parte de la izquierda
+// - Ver cómo facilitar la creación de grillas de Currie
 
 // Stuhl diagram desarrollado por Derek Philip Au en d3.js
 // https://derekphilipau.github.io/ceramic-chemistry-visualization/charts/d3.html
-
-// Ver cómo facilitar la creación de grillas de Currie
 
 import { state } from "./js/state.js";
 import { loadMaterials } from "./js/materials.js";
@@ -39,14 +33,22 @@ import {
   loadRecipesFromLocalStorage,
   clearAllRecipes,
   clearRecipesBeyondBlendType,
+  importRecipes,
+  getBlendTypeCornerCount,
+  countPopulatedCorners,
 } from "./js/recipes.js";
 import {
   updateBlendInputs,
   updateRecipeCards,
   showTab,
   applyRecipeCardColors,
+  showActionDialog,
 } from "./js/ui.js";
-import { downloadDiagramAsPng, downloadRecipesAsCsv } from "./js/download.js";
+import {
+  downloadDiagramAsPng,
+  downloadRecipesAsCsv,
+  exportRecipesAsJson,
+} from "./js/download.js";
 import { applyStaticTranslations, getLang, setLang, t } from "./js/i18n.js";
 import { resortMaterials } from "./js/materials.js";
 
@@ -57,6 +59,13 @@ loadMaterials()
   .catch(error => {
     console.error("Error loading materials.json:", error);
   });
+
+const BLEND_TYPE_LABEL_KEYS = {
+  line: "blendTypeLine",
+  triaxial: "blendTypeTriaxial",
+  biaxial: "blendTypeBiaxial",
+};
+const CORNER_COUNT_TO_BLEND_TYPE = { 2: "line", 3: "triaxial", 4: "biaxial" };
 
 function init() {
   applyStaticTranslations();
@@ -98,16 +107,97 @@ function init() {
     showTab("recipes");
   });
 
-  document.getElementById("download-button").addEventListener("click", () => {
-    const onGraphTab = !document
-      .getElementById("tab-content-graph")
-      .classList.contains("hidden");
+  document
+    .getElementById("download-png-button")
+    .addEventListener("click", downloadDiagramAsPng);
 
-    if (onGraphTab) {
-      downloadDiagramAsPng();
-    } else {
-      downloadRecipesAsCsv();
-    }
+  document
+    .getElementById("download-csv-button")
+    .addEventListener("click", downloadRecipesAsCsv);
+
+  document
+    .getElementById("export-recipes-button")
+    .addEventListener("click", exportRecipesAsJson);
+
+  const importInput = document.getElementById("import-recipes-input");
+  document
+    .getElementById("import-recipes-button")
+    .addEventListener("click", () => importInput.click());
+
+  importInput.addEventListener("change", () => {
+    const file = importInput.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      // Reset now so picking the same file again still fires "change".
+      importInput.value = "";
+
+      let parsed;
+      try {
+        parsed = JSON.parse(reader.result);
+      } catch {
+        parsed = null;
+      }
+      if (!parsed || typeof parsed.recipes !== "object") {
+        alert(t("importInvalidFile"));
+        return;
+      }
+
+      const blendTypeSelect = document.getElementById("blendType");
+      const currentCount = getBlendTypeCornerCount(blendTypeSelect.value);
+      const importedCount = countPopulatedCorners(parsed.recipes);
+      const currentBlendType = t(BLEND_TYPE_LABEL_KEYS[blendTypeSelect.value]);
+
+      // The file has recipes beyond what the current blend type shows -
+      // offer switching to match (keeps them all) alongside importing as
+      // is, instead of chaining several confirm() dialogs in a row.
+      let message = t("importReplaceWarning");
+      const buttons = [{ value: "cancel", label: t("cancelButton") }];
+      let target = null;
+
+      if (importedCount > currentCount) {
+        target = CORNER_COUNT_TO_BLEND_TYPE[importedCount];
+        const targetBlendType = t(BLEND_TYPE_LABEL_KEYS[target]);
+        message +=
+          "\n\n" +
+          t("importBlendTypeMismatch", {
+            importedCount,
+            currentCount,
+            currentBlendType,
+            targetBlendType,
+          });
+        buttons.push({
+          value: "keep",
+          label: t("importKeepBlendTypeButton", { currentBlendType }),
+        });
+        buttons.push({
+          value: "switch",
+          label: t("importSwitchBlendTypeButton", { targetBlendType }),
+          primary: true,
+        });
+      } else {
+        buttons.push({
+          value: "keep",
+          label: t("importConfirmButton"),
+          primary: true,
+        });
+      }
+
+      const choice = await showActionDialog(message, buttons);
+      if (choice === "cancel") return;
+      if (choice === "switch") {
+        blendTypeSelect.value = target;
+        blendTypeSelect.dispatchEvent(new Event("change"));
+      }
+
+      const droppedRows = importRecipes(parsed.recipes);
+      clearRecipesBeyondBlendType(document.getElementById("blendType").value);
+      if (droppedRows > 0) {
+        alert(t("importDroppedRows", { count: droppedRows }));
+      }
+    };
+    reader.readAsText(file);
   });
 
   document
@@ -133,6 +223,14 @@ function init() {
   document
     .getElementById("recalculateButton")
     .addEventListener("click", drawBlend);
+
+  // Persist size/points/rows/columns as soon as they change, so they
+  // survive a reload even if the user never clicks "Recalcular"
+  // (blendType already saves on its own "change" listener above, via
+  // drawBlend()).
+  BLEND_SETTINGS_FIELDS.filter(id => id !== "blendType").forEach(id => {
+    document.getElementById(id).addEventListener("change", saveBlendSettings);
+  });
 
   populateRecipeMaterialSelects();
 
@@ -209,14 +307,15 @@ function drawBlend() {
     ? document.getElementById("increments").value
     : 0;
 
+  let anchor;
   if (blendType === "line") {
     if (!meetsRange(linePointsInput, "labelPoints")) return;
     state.blendData = getLinearData(linePointsInput.value, increment, testSize);
-    drawLinearBlend(state.blendData);
+    anchor = drawLinearBlend(state.blendData);
   } else if (blendType === "triaxial") {
     if (!meetsRange(triaxialPointsInput, "labelPoints")) return;
     state.blendData = getTriaxialData(triaxialPointsInput.value, testSize);
-    drawTriaxialBlend(state.blendData);
+    anchor = drawTriaxialBlend(state.blendData);
   } else if (blendType === "biaxial") {
     if (
       !meetsRange(biaxialRowsInput, "labelRows") ||
@@ -228,7 +327,7 @@ function drawBlend() {
       biaxialColumnsInput.value,
       testSize,
     );
-    drawBiaxialBlend(state.blendData);
+    anchor = drawBiaxialBlend(state.blendData);
   }
 
   document.getElementById("total-points-value").textContent =
@@ -238,14 +337,19 @@ function drawBlend() {
   // diagram each corner ends up needing an equal (symmetric) share of
   // the total ml poured - just the grand total divided by corner count.
   const totalMl = state.blendData.reduce(
-    (sum, point) =>
-      sum + Object.values(point.ml).reduce((s, ml) => s + ml, 0),
+    (sum, point) => sum + Object.values(point.ml).reduce((s, ml) => s + ml, 0),
     0,
   );
   const numCorners = Object.keys(state.blendData[0].ml).length;
-  document.getElementById("min-ml-note").textContent = t("minTotalMlNote", {
+  const minMlNote = document.getElementById("min-ml-note");
+  minMlNote.textContent = t("minTotalMlNote", {
     amount: roundTo(totalMl / numCorners),
   });
+  // Pin the note just below the bottom-left-most point (each drawXBlend
+  // returns that point's box's bottom-left corner in SVG coordinates,
+  // which line up 1:1 with CSS pixels since the SVG has no viewBox).
+  minMlNote.style.left = `${anchor.x}px`;
+  minMlNote.style.top = `${anchor.y + 8}px`;
 
   renderRecipesTable();
 }

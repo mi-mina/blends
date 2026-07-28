@@ -44,7 +44,9 @@
       <!-- Below the banner on small screens, where there's no room to
       overlay it without covering the image or the language buttons;
       overlaid on top of it from `sm:` up. -->
-      <h1 class="px-4 py-4 sm:py-0 sm:absolute sm:inset-0 sm:z-10 sm:flex sm:items-center">
+      <h1
+        class="px-4 py-4 sm:py-0 sm:absolute sm:inset-0 sm:z-10 sm:flex sm:items-center"
+      >
         <div class="w-full max-w-7xl mx-auto">
           <span
             data-i18n="pageTitle"
@@ -69,7 +71,12 @@
           <select
             id="blendType"
             class="border border-gray-300 pl-2 pr-8 py-1 mt-1 w-full appearance-none"
-            style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+            style="
+              background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+              background-repeat: no-repeat;
+              background-position: right 0.6rem center;
+              background-size: 1rem;
+            "
           >
             <option value="line" data-i18n="optionLine">Lineal</option>
             <option value="triaxial" data-i18n="optionTriaxial">
@@ -95,7 +102,9 @@
 
           <div id="lineInputs">
             <!-- Input field for points -->
-            <label for="linePoints" class="block text-gray-700 font-semibold mt-4"
+            <label
+              for="linePoints"
+              class="block text-gray-700 font-semibold mt-4"
               ><span data-i18n="pointsLabel">Puntos</span></label
             >
             <input
@@ -123,8 +132,12 @@
 
           <div id="triaxialInputs" class="hidden">
             <!-- Input field for points -->
-            <label for="triaxialPoints" class="block text-gray-700 font-semibold mt-4"
-              ><span data-i18n="pointsLabelTriaxial">Puntos del lateral</span></label
+            <label
+              for="triaxialPoints"
+              class="block text-gray-700 font-semibold mt-4"
+              ><span data-i18n="pointsLabelTriaxial"
+                >Puntos del lateral</span
+              ></label
             >
             <input
               id="triaxialPoints"
@@ -140,7 +153,9 @@
 
           <div id="biaxialInputs" class="hidden">
             <!-- Input field for number of rows -->
-            <label for="biaxialRows" class="block text-gray-700 font-semibold mt-4"
+            <label
+              for="biaxialRows"
+              class="block text-gray-700 font-semibold mt-4"
               ><span data-i18n="rowsLabel">Filas</span></label
             >
             <input
@@ -155,7 +170,9 @@
             />
 
             <!-- Input field for number of rows -->
-            <label for="biaxialColumns" class="block text-gray-700 font-semibold mt-4"
+            <label
+              for="biaxialColumns"
+              class="block text-gray-700 font-semibold mt-4"
               ><span data-i18n="columnsLabel">Columnas</span></label
             >
             <input
@@ -203,41 +220,20 @@
             >
               Recetas
             </button>
-            <button
-              id="download-button"
-              class="ml-auto px-3 py-2 -mb-px flex items-center gap-1.5 text-gray-600 hover:text-blue-600 font-semibold focus:outline-none"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-5 h-5"
-                aria-hidden="true"
-              >
-                <path d="M12 3v12" />
-                <path d="M7 10l5 5 5-5" />
-                <path d="M4 19h16" />
-              </svg>
-              <span data-i18n="downloadButton">Descargar</span>
-            </button>
           </div>
           <!-- Tab Contents -->
           <div id="tab-content-graph">
-            <div class="overflow-x-auto">
+            <div class="relative overflow-x-auto pb-4">
               <div id="graph"></div>
+              <p
+                id="min-ml-note"
+                class="absolute max-w-m text-sm text-gray-600"
+              ></p>
             </div>
-            <p id="min-ml-note" class="mt-2 text-sm text-gray-600"></p>
-          </div>
-
-          <div id="tab-content-recipes" class="hidden">
-            <div class="flex justify-end mb-2">
+            <div class="flex items-center gap-2 mt-4">
               <button
-                id="clear-recipes-button"
-                class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-red-600 hover:text-red-800 hover:underline focus:outline-none"
+                id="download-png-button"
+                class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -250,15 +246,19 @@
                   class="w-4 h-4"
                   aria-hidden="true"
                 >
-                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                  <path d="M21 3v5h-5" />
-                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                  <path d="M8 16H3v5" />
+                  <path d="M12 3v12" />
+                  <path d="M7 10l5 5 5-5" />
+                  <path d="M4 19h16" />
                 </svg>
-                <span data-i18n="clearRecipesButton">Limpiar recetas</span>
+                <span data-i18n="downloadPngButton">Descargar PNG</span>
               </button>
             </div>
-            <div class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(240px,360px))]">
+          </div>
+
+          <div id="tab-content-recipes" class="hidden">
+            <div
+              class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(240px,360px))]"
+            >
               <!-- Card 1 -->
               <div
                 id="recipe1"
@@ -299,7 +299,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -356,7 +361,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -413,7 +423,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -470,7 +485,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -571,7 +591,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -628,7 +653,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -685,7 +715,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -742,7 +777,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -842,7 +882,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -899,7 +944,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -956,7 +1006,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -1013,7 +1068,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -1113,7 +1173,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -1170,7 +1235,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -1227,7 +1297,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -1284,7 +1359,12 @@
                     <input
                       type="text"
                       class="recipe-material-input border border-gray-300 pl-2 pr-16 py-1 w-full h-10 text-gray-400 appearance-none"
-                      style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right .6rem center;background-size:1rem"
+                      style="
+                        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M5 7l5 5 5-5%27/%3E%3C/svg%3E&quot;);
+                        background-repeat: no-repeat;
+                        background-position: right 0.6rem center;
+                        background-size: 1rem;
+                      "
                       autocomplete="off"
                       role="combobox"
                       aria-expanded="false"
@@ -1344,6 +1424,105 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mt-4">
+              <div class="flex flex-wrap items-center gap-2">
+                <button
+                  id="download-csv-button"
+                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 3v12" />
+                    <path d="M7 10l5 5 5-5" />
+                    <path d="M4 19h16" />
+                  </svg>
+                  <span data-i18n="downloadCsvButton">Descargar CSV</span>
+                </button>
+                <button
+                  id="export-recipes-button"
+                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 3v12" />
+                    <path d="M7 10l5 5 5-5" />
+                    <path d="M4 19h16" />
+                  </svg>
+                  <span data-i18n="exportRecipesButton">Exportar JSON</span>
+                </button>
+                <button
+                  id="import-recipes-button"
+                  class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-gray-600 hover:text-blue-600 focus:outline-none"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 15V3" />
+                    <path d="M7 8l5-5 5 5" />
+                    <path d="M4 19h16" />
+                  </svg>
+                  <span data-i18n="importRecipesButton">Importar JSON</span>
+                </button>
+                <input
+                  type="file"
+                  id="import-recipes-input"
+                  accept="application/json"
+                  class="hidden"
+                />
+              </div>
+              <button
+                id="clear-recipes-button"
+                class="px-3 py-1.5 text-sm flex items-center gap-1.5 text-red-600 hover:text-red-800 hover:underline focus:outline-none"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"
+                  />
+                  <path d="M21 3v5h-5" />
+                  <path
+                    d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"
+                  />
+                  <path d="M8 16H3v5" />
+                </svg>
+                <span data-i18n="clearRecipesButton">Limpiar recetas</span>
+              </button>
             </div>
             <div
               id="recipes-table-container"
@@ -1427,7 +1606,10 @@
           class="mt-10 pt-6 border-t border-white/10 text-sm text-[#d9edf0] flex flex-col sm:flex-row sm:justify-between gap-2"
         >
           <div>
-            <span data-i18n="footerCredit">Hecho por Esperanza Moreno Cruz</span> ·
+            <span data-i18n="footerCredit"
+              >Hecho por Esperanza Moreno Cruz</span
+            >
+            ·
             <a
               href="https://www.instagram.com/_mi_mi_na_/"
               target="_blank"
@@ -1449,6 +1631,22 @@
         </footer>
       </div>
     </section>
+
+    <div
+      id="confirm-dialog-overlay"
+      class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4"
+    >
+      <div class="bg-white rounded shadow-lg max-w-md w-full p-4">
+        <p
+          id="confirm-dialog-message"
+          class="text-gray-800 whitespace-pre-line mb-4"
+        ></p>
+        <div
+          id="confirm-dialog-buttons"
+          class="flex flex-wrap justify-end gap-2"
+        ></div>
+      </div>
+    </div>
 
     <script src="./lib/js/d3.v7.min.js"></script>
     <script src="./lib/js/chroma.min.cjs"></script>

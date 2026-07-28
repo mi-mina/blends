@@ -3,6 +3,7 @@ import {
   pointR,
   sep,
   margin,
+  verticalGutter,
   colorA,
   colorB,
   colorC,
@@ -203,6 +204,8 @@ function renderBlendChart(
  * Draws a linear blend chart using D3.js.
  * @param {Array} data - The blend data to visualize.
  * @description Each object in the data array should contain the point index, percentages for each corner, and milliliters for each corner.
+ * @returns {{x: number, y: number}} The bottom-left corner of point A's box
+ * (the bottom-left-most point in this layout), for anchoring the min-ml note.
  */
 export function drawLinearBlend(data) {
   clearGraph();
@@ -212,7 +215,11 @@ export function drawLinearBlend(data) {
     sep * (data.length - 1) +
     margin.left +
     margin.right;
-  const svgHeight = pointSide * 2 + margin.top + margin.bottom;
+  // Corner letters here sit beside the endpoints (see cornerLabels below),
+  // not above/below them, so top/bottom only need a small gutter, not the
+  // full `margin` reserved for corner labels on the other two blend types.
+  const svgHeight = pointSide * 2 + verticalGutter * 2;
+  const chartY = pointSide / 2 + verticalGutter;
 
   const cornerLabels = new Map([
     [
@@ -229,9 +236,7 @@ export function drawLinearBlend(data) {
     corners: CORNER_LAYOUTS[2],
     svgWidth,
     svgHeight,
-    chartTransform: `translate(${margin.left + pointSide / 2}, ${
-      svgHeight / 2
-    })`,
+    chartTransform: `translate(${margin.left + pointSide / 2}, ${chartY})`,
     pointTransform: (d, i) => {
       const x = i * (pointSide + sep);
       const y = pointSide / 2;
@@ -239,12 +244,17 @@ export function drawLinearBlend(data) {
     },
     cornerLabels,
   });
+
+  return { x: margin.left, y: svgHeight - verticalGutter };
 }
 
 /**
  * Draws a triaxial blend chart using D3.js.
  * @param {Array} data - The triaxial blend data to visualize.
  * @description Each object in the data array should contain the point index, position in the triangle, percentages for each corner, and milliliters for each corner.
+ * @returns {{x: number, y: number}} The bottom-left corner of the baseLeft
+ * point's box (the bottom-left-most point in this layout), for anchoring
+ * the min-ml note.
  */
 export function drawTriaxialBlend(data) {
   clearGraph();
@@ -256,11 +266,19 @@ export function drawTriaxialBlend(data) {
     sep * (numberOfRows - 1) +
     margin.left +
     margin.right;
+  // Only the apex label (above) needs top margin - the base corner labels
+  // sit beside the base row, not below it - so bottom only needs a small
+  // gutter, not the full `margin` reserved for the apex. `pointSide * 2`
+  // per row (rather than `pointSide * (2 * numberOfRows - 1)`) would
+  // over-count by one pointSide, since only the topmost row's box
+  // extends a full pointSide *above* its own row origin - the bottom
+  // row's box doesn't extend an equivalent pointSide *below* the space
+  // already reserved for it.
   const svgHeight =
-    pointSide * 2 * numberOfRows +
+    pointSide * (2 * numberOfRows - 1) +
     sep * (numberOfRows - 1) +
     margin.top +
-    margin.bottom;
+    verticalGutter;
 
   // Scale to position points in a triangular grid
   const xScale = pointSide * 2 + sep;
@@ -312,12 +330,20 @@ export function drawTriaxialBlend(data) {
     },
     cornerLabels,
   });
+
+  return {
+    x: margin.left + xScale / 2 - pointSide,
+    y: margin.top + (numberOfRows - 1) * yScale + pointSide,
+  };
 }
 
 /**
  * Draws a biaxial blend chart using D3.js.
  * @param {Array} data - The biaxial blend data to visualize.
  * @description Each object in the data array should contain the position, point index, percentages for each corner, and milliliters for each corner.
+ * @returns {{x: number, y: number}} The bottom-left corner of the
+ * bottomLeft point's box (the bottom-left-most point in this layout), for
+ * anchoring the min-ml note.
  */
 export function drawBiaxialBlend(data) {
   clearGraph();
@@ -330,11 +356,16 @@ export function drawBiaxialBlend(data) {
     sep * (numberOfColumns - 1) +
     margin.left +
     margin.right;
+  // Every corner label sits beside its corner (x offset only, see
+  // cornerLabels below), never above/below it, so top/bottom only need a
+  // small gutter, not the full `margin` reserved for the left/right
+  // labels. See the equivalent comment in drawTriaxialBlend() for why
+  // it's `pointSide * (2 * numberOfRows - 1)`, not `pointSide * 2 * numberOfRows`.
   const svgHeight =
-    pointSide * 2 * numberOfRows +
+    pointSide * (2 * numberOfRows - 1) +
     sep * (numberOfRows - 1) +
     margin.top +
-    margin.bottom;
+    verticalGutter;
 
   const topLeft = data.find(d => d.position[0] === 0 && d.position[1] === 0);
   const topRight = data.find(
@@ -399,4 +430,9 @@ export function drawBiaxialBlend(data) {
     },
     cornerLabels,
   });
+
+  return {
+    x: margin.left - pointSide,
+    y: margin.top + (numberOfRows - 1) * (pointSide * 2 + sep) + pointSide,
+  };
 }

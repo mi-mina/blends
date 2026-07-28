@@ -127,3 +127,25 @@ export function downloadRecipesAsCsv() {
   link.click();
   URL.revokeObjectURL(link.href);
 }
+
+const RECIPES_EXPORT_VERSION = 1;
+
+/**
+ * Downloads state.recipes as a JSON file that importRecipes() (recipes.js)
+ * can read back, so recipes survive beyond this browser's localStorage.
+ */
+export function exportRecipesAsJson() {
+  const payload = {
+    version: RECIPES_EXPORT_VERSION,
+    exportedAt: new Date().toISOString(),
+    recipes: state.recipes,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {
+    type: "application/json",
+  });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${t("filenameRecipes")}.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
