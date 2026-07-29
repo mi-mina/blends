@@ -60,6 +60,8 @@ export const translations = {
     footerLicenseLabel: "Licencia",
     footerMaterialsCredit: "Listado de materiales adaptado de",
     footerMaterialsCreditEnd: "(glazy.org), bajo licencia CC BY-NC-SA 4.0.",
+    footerContact:
+      "Si encuentras un error o tienes alguna sugerencia, ¡escríbeme por Instagram!",
     rangeExact: "entre {min} y {max}",
     rangeMin: "al menos {min}",
     meetsRangeError: "Introduce {range} {label} para dibujar el diagrama.",
@@ -150,6 +152,8 @@ export const translations = {
     footerLicenseLabel: "License",
     footerMaterialsCredit: "Materials list adapted from",
     footerMaterialsCreditEnd: "(glazy.org), used under CC BY-NC-SA 4.0.",
+    footerContact:
+      "Found a bug or have a suggestion? Message me on Instagram!",
     rangeExact: "between {min} and {max}",
     rangeMin: "at least {min}",
     meetsRangeError: "Enter {range} {label} to draw the diagram.",

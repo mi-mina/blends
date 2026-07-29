@@ -3,12 +3,12 @@
 
 // TODO
 // - Añadir textos de ayuda en cada input al pasar el ratón por encima?
-// - Añadir las fórmulas?
 // - Posibilidad de darle un nombre custom a cada receta
 // - Poder elegir los colores de las esquinas
 // - Hacer que se oculte la parte de la izquierda
 // - Ver cómo facilitar la creación de grillas de Currie
 
+// - Introducir los diagramas de stuhl de las recetas?
 // Stuhl diagram desarrollado por Derek Philip Au en d3.js
 // https://derekphilipau.github.io/ceramic-chemistry-visualization/charts/d3.html
 

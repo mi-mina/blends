@@ -32,9 +32,7 @@ export function populateRecipeMaterialSelects() {
     // The select itself is hidden (see wireMaterialCombobox) - refresh
     // the visible search input's text too, in case a language switch
     // changed the selected material's translated name.
-    const input = select.parentElement.querySelector(
-      ".recipe-material-input",
-    );
+    const input = select.parentElement.querySelector(".recipe-material-input");
     if (input) {
       const selectedMaterial = select.value
         ? state.materialsById[select.value]
@@ -270,7 +268,9 @@ function syncRowAccessibleLabels(select, percentageInput, checkbox) {
   );
   checkbox.setAttribute(
     "aria-label",
-    name ? t("additiveAriaLabel", { material: name }) : t("additiveAriaLabelEmpty"),
+    name
+      ? t("additiveAriaLabel", { material: name })
+      : t("additiveAriaLabelEmpty"),
   );
 }
 
@@ -382,7 +382,7 @@ function updateRecipeTotal(container) {
   let additivesTotal = 0;
   let hasAdditives = false;
   rows.forEach(row => {
-    const input = row.querySelector('.recipe-percentage-input');
+    const input = row.querySelector(".recipe-percentage-input");
     const checkbox = row.querySelector('input[type="checkbox"]');
     const percentage = parseFloat(input?.value) || 0;
 
@@ -422,7 +422,7 @@ function addRecipeRow(container, key) {
   const newRow = lastRow.cloneNode(true);
 
   const select = newRow.querySelector(".recipe-material-select");
-  const input = newRow.querySelector('.recipe-percentage-input');
+  const input = newRow.querySelector(".recipe-percentage-input");
   const checkbox = newRow.querySelector('input[type="checkbox"]');
   select.value = "";
   input.value = "";
@@ -441,7 +441,7 @@ function addRecipeRow(container, key) {
 RECIPE_CARDS.forEach(({ recipeId, key }) => {
   const container = document.getElementById(recipeId);
   const selects = container.querySelectorAll(".recipe-material-select");
-  const inputs = container.querySelectorAll('.recipe-percentage-input');
+  const inputs = container.querySelectorAll(".recipe-percentage-input");
   const checkboxes = container.querySelectorAll('input[type="checkbox"]');
 
   selects.forEach((select, i) => {
@@ -474,7 +474,7 @@ function applyRecipesData(recipesData) {
     // auto-adds a new one, which the next iteration needs to see.
     recipeData.forEach((row, i) => {
       const selects = container.querySelectorAll(".recipe-material-select");
-      const inputs = container.querySelectorAll('.recipe-percentage-input');
+      const inputs = container.querySelectorAll(".recipe-percentage-input");
       const checkboxes = container.querySelectorAll('input[type="checkbox"]');
 
       if (selects[i]) {
@@ -572,7 +572,7 @@ function clearRecipeCard(recipeId, key) {
     input.value = "";
     input.classList.add("text-gray-400");
   });
-  container.querySelectorAll('.recipe-percentage-input').forEach(input => {
+  container.querySelectorAll(".recipe-percentage-input").forEach(input => {
     input.value = "";
     input.disabled = true;
   });
@@ -651,7 +651,7 @@ export function clearRecipesBeyondBlendType(blendType) {
 export function getRecipeData(recipeId) {
   const recipe = document.getElementById(recipeId);
   const selects = recipe.querySelectorAll(".recipe-material-select");
-  const inputs = recipe.querySelectorAll('.recipe-percentage-input');
+  const inputs = recipe.querySelectorAll(".recipe-percentage-input");
   const checkboxes = recipe.querySelectorAll('input[type="checkbox"]');
   const data = [];
 
@@ -673,8 +673,7 @@ export function getRecipeData(recipeId) {
 /**
  * Ceramic recipes are conventionally written so the base (non-additive)
  * ingredients sum to 100%. Users won't always type a base that actually
- * does, so scale every row - base and additive alike, matching
- * glazy.org's convention - by whatever factor would make the base hit
+ * does, so scale every row - base and additive alike - by whatever factor would make the base hit
  * 100, rather than using the raw numbers as typed.
  * @param {Array} recipe - A state.recipes[key] entry.
  * @returns {number} The scaling factor, or 0 if the recipe has no base
@@ -811,7 +810,8 @@ export function renderRecipesTable() {
         ${selectedMaterials
           .map((mat, idx) => {
             const name = materialName(state.materialsById[mat]);
-            const divider = idx === additiveStart ? " border-l border-l-gray-300" : "";
+            const divider =
+              idx === additiveStart ? " border-l border-l-gray-300" : "";
             return `<th scope="col" class="border-b-2 border-b-gray-500 px-2 py-1 text-left max-w-[200px] truncate${divider}" title="${name}">${name}</th>`;
           })
           .join("")}
@@ -838,7 +838,8 @@ export function renderRecipesTable() {
               recipeNumber,
               materialId,
             );
-            const divider = idx === additiveStart ? " border-l border-l-gray-300" : "";
+            const divider =
+              idx === additiveStart ? " border-l border-l-gray-300" : "";
             return `<td class="border-b-2 px-2 py-1${divider}" style="${rowBorderStyle}">${roundTo(
               materialPercentage,
             )}%</td>`;
@@ -865,7 +866,7 @@ function partitionSelectedMaterials() {
 
   rows.forEach(row => {
     const select = row.querySelector(".recipe-material-select");
-    const input = row.querySelector('.recipe-percentage-input');
+    const input = row.querySelector(".recipe-percentage-input");
     if (!select?.value || !input?.value) return;
 
     const checkbox = row.querySelector('input[type="checkbox"]');
