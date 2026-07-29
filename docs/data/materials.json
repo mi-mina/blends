@@ -556,7 +556,7 @@
       "searchName_es":"Carburo de silicio",
       "materialName":"Silicon carbide",
       "searchName":"Silicon carbide, SiC",
-      "materialAnalysis":"",
+      "materialAnalysis":"SiC: 100",
       "materialOxides":[
          
       ]
@@ -700,7 +700,7 @@
    {
       "materialId":55,
       "materialName_es":"Creta",
-      "searchName_es":"Creta, Carbonato de calcio",
+      "searchName_es":"Creta, Carbonato de calcio, Carbonato Cálcico",
       "materialName":"Whiting",
       "searchName":"Whiting, Calcium Carbonate",
       "materialAnalysis":"CaO: 56",

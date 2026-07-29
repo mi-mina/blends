@@ -93,10 +93,12 @@ function buildMaterialOptionsHtml(filterText, listboxId) {
   }
 
   return matches
-    .map(
-      (mat, i) =>
-        `<li id="${listboxId}-option-${i}" class="recipe-material-option px-2 py-1.5 cursor-pointer hover:bg-blue-50" data-material-id="${mat.materialId}" role="option">${materialName(mat)}</li>`,
-    )
+    .map((mat, i) => {
+      const analysis = mat.materialAnalysis
+        ? `<div class="text-xs text-gray-500">${mat.materialAnalysis}</div>`
+        : "";
+      return `<li id="${listboxId}-option-${i}" class="recipe-material-option px-2 py-1.5 cursor-pointer hover:bg-blue-50" data-material-id="${mat.materialId}" role="option"><div>${materialName(mat)}</div>${analysis}</li>`;
+    })
     .join("");
 }
 

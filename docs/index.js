@@ -2,8 +2,6 @@
 // https://mimina.goatcounter.com/
 
 // TODO
-// - Creo que hay un bug en los desplegables de los materiales.
-// - Revisión de accesibilidad: que se pueda navegar con el teclado, que los inputs tengan labels, etc.
 // - Añadir textos de ayuda en cada input al pasar el ratón por encima?
 // - Añadir las fórmulas?
 // - Posibilidad de darle un nombre custom a cada receta
@@ -110,21 +108,22 @@ function init() {
   // Left/Right switches tabs and moves focus with it, per the ARIA tabs
   // pattern's "roving tabindex" - only 2 tabs exist, so the other one is
   // always just "whichever isn't this button".
-  [document.getElementById("tab-graph"), document.getElementById("tab-recipes")].forEach(
-    tabButton => {
-      tabButton.addEventListener("keydown", event => {
-        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-        event.preventDefault();
+  [
+    document.getElementById("tab-graph"),
+    document.getElementById("tab-recipes"),
+  ].forEach(tabButton => {
+    tabButton.addEventListener("keydown", event => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
 
-        const other =
-          tabButton.id === "tab-graph"
-            ? document.getElementById("tab-recipes")
-            : document.getElementById("tab-graph");
-        other.focus();
-        other.click();
-      });
-    },
-  );
+      const other =
+        tabButton.id === "tab-graph"
+          ? document.getElementById("tab-recipes")
+          : document.getElementById("tab-graph");
+      other.focus();
+      other.click();
+    });
+  });
 
   document
     .getElementById("download-png-button")
